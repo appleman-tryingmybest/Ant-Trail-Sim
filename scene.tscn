@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://dvss8e7fv1esp"]
+
+[ext_resource type="Texture2D" uid="uid://gvixjmna8e0s" path="res://assets/white.png" id="1_ulcgi"]
+[ext_resource type="PackedScene" uid="uid://bixmfq2u5pwh7" path="res://home.tscn" id="2_nxogm"]
+[ext_resource type="PackedScene" uid="uid://c5qsgbij8mkhs" path="res://rock.tscn" id="3_3253y"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ojnr2"]
+normal = Vector2(0, 1)
+distance = -40.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_nxogm"]
+normal = Vector2(0, 1)
+distance = -40.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3253y"]
+normal = Vector2(0, 1)
+distance = -40.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_u3cyc"]
+normal = Vector2(0, 1)
+distance = -40.0
+
+[node name="Scene" type="Node2D" unique_id=1798033359]
+
+[node name="background" type="Sprite2D" parent="." unique_id=2087974099]
+modulate = Color(0.26293245, 0.26293245, 0.26293245, 1)
+scale = Vector2(252.9, 142.277)
+texture = ExtResource("1_ulcgi")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=665957890]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1347555247]
+position = Vector2(-32, -496)
+shape = SubResource("WorldBoundaryShape2D_ojnr2")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=1458573983]
+position = Vector2(952, 8)
+rotation = 1.5707964
+shape = SubResource("WorldBoundaryShape2D_nxogm")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=1415886488]
+position = Vector2(-8, 496)
+rotation = 3.1415927
+shape = SubResource("WorldBoundaryShape2D_3253y")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=572523289]
+position = Vector2(-944, -24)
+rotation = -1.5707964
+shape = SubResource("WorldBoundaryShape2D_u3cyc")
+
+[node name="home" parent="." unique_id=1209723676 instance=ExtResource("2_nxogm")]
+position = Vector2(-784, 0)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1929374387]
+
+[node name="rock" parent="." unique_id=675800118 instance=ExtResource("3_3253y")]
+position = Vector2(-80, 264)
+
+[node name="rock2" parent="." unique_id=1072115784 instance=ExtResource("3_3253y")]
+position = Vector2(-408, 176)
+
+[node name="rock3" parent="." unique_id=1815958561 instance=ExtResource("3_3253y")]
+position = Vector2(-152, -64)
+
+[node name="rock4" parent="." unique_id=1647480675 instance=ExtResource("3_3253y")]
+position = Vector2(104, 72)

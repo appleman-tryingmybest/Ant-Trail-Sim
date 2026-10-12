@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dloxqqi56lstd"]
+
+[ext_resource type="Texture2D" uid="uid://gvixjmna8e0s" path="res://assets/white.png" id="1_8txok"]
+
+[node name="food" type="Node2D" unique_id=1568168608]
+
+[node name="White" type="Sprite2D" parent="." unique_id=1724394544]
+modulate = Color(9.1448425e-07, 0.88766265, 0, 1)
+scale = Vector2(15, 15)
+texture = ExtResource("1_8txok")

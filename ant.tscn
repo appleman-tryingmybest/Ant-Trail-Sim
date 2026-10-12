@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cno3c86pj1i63"]
+
+[ext_resource type="Script" uid="uid://cpiuits5tldw" path="res://ant.gd" id="1_oav7h"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5tacl"]
+load_path = "res://.godot/imported/ant.png-0707e49ede095c1a1a11b4ccb6383b9d.ctex"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_emoma"]
+
+[node name="ant" type="CharacterBody2D" unique_id=2110801138]
+collision_layer = 2
+script = ExtResource("1_oav7h")
+speed = 60.0
+rotation_angle = 50.0
+rotation_cooldown = 0.5
+
+[node name="Ant" type="Sprite2D" parent="." unique_id=1504331066]
+texture = SubResource("CompressedTexture2D_5tacl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2141371121]
+shape = SubResource("CircleShape2D_emoma")

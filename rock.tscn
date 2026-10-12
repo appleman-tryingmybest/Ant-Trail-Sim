@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://c5qsgbij8mkhs"]
+
+[ext_resource type="Script" uid="uid://c30mrf4bgux14" path="res://rock.gd" id="1_o0qsl"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_68h2w"]
+load_path = "res://.godot/imported/ballorrock.png-45350f9d28ee8c24705f170fefd12908.ctex"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ojnr2"]
+radius = 40.0
+
+[node name="rock" type="StaticBody2D" unique_id=263186272]
+script = ExtResource("1_o0qsl")
+
+[node name="Ballorrock" type="Sprite2D" parent="." unique_id=257121586]
+scale = Vector2(0.4, 0.4)
+texture = SubResource("CompressedTexture2D_68h2w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=496076985]
+shape = SubResource("CircleShape2D_ojnr2")
+
+[node name="Button" type="Button" parent="." unique_id=2132989293]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = -38.0
+offset_top = -38.0
+offset_right = 37.0
+offset_bottom = 37.0
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
