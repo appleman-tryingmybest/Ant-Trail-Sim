@@ -1,8 +1,20 @@
 [gd_scene format=3 uid="uid://dloxqqi56lstd"]
 
 [ext_resource type="Texture2D" uid="uid://gvixjmna8e0s" path="res://assets/white.png" id="1_8txok"]
+[ext_resource type="Script" uid="uid://cqd5o040rlhg3" path="res://food.gd" id="1_pohk7"]
 
-[node name="food" type="Node2D" unique_id=1568168608]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ojnr2"]
+size = Vector2(150, 150)
+
+[node name="food" type="StaticBody2D" unique_id=1441286426]
+scale = Vector2(0.2, 0.2)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_pohk7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1201811427]
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_ojnr2")
 
 [node name="White" type="Sprite2D" parent="." unique_id=1724394544]
 modulate = Color(9.1448425e-07, 0.88766265, 0, 1)

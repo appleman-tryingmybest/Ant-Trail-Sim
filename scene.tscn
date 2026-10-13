@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://dvss8e7fv1esp"]
 
+[ext_resource type="Script" uid="uid://dkp1rjqweoycl" path="res://scene.gd" id="1_m7jmp"]
 [ext_resource type="Texture2D" uid="uid://gvixjmna8e0s" path="res://assets/white.png" id="1_ulcgi"]
 [ext_resource type="PackedScene" uid="uid://bixmfq2u5pwh7" path="res://home.tscn" id="2_nxogm"]
 [ext_resource type="PackedScene" uid="uid://c5qsgbij8mkhs" path="res://rock.tscn" id="3_3253y"]
+[ext_resource type="PackedScene" uid="uid://dloxqqi56lstd" path="res://food.tscn" id="4_u3cyc"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ojnr2"]
 normal = Vector2(0, 1)
@@ -21,9 +23,10 @@ normal = Vector2(0, 1)
 distance = -40.0
 
 [node name="Scene" type="Node2D" unique_id=1798033359]
+script = ExtResource("1_m7jmp")
 
 [node name="background" type="Sprite2D" parent="." unique_id=2087974099]
-modulate = Color(0.26293245, 0.26293245, 0.26293245, 1)
+modulate = Color(0.50534403, 0.5053441, 0.50534403, 1)
 scale = Vector2(252.9, 142.277)
 texture = ExtResource("1_ulcgi")
 
@@ -64,3 +67,18 @@ position = Vector2(-152, -64)
 
 [node name="rock4" parent="." unique_id=1647480675 instance=ExtResource("3_3253y")]
 position = Vector2(104, 72)
+
+[node name="food" parent="." unique_id=1568168608 instance=ExtResource("4_u3cyc")]
+position = Vector2(256, -96)
+
+[node name="food2" parent="." unique_id=1441286426 instance=ExtResource("4_u3cyc")]
+position = Vector2(288, -72)
+
+[node name="food3" parent="." unique_id=1613251272 instance=ExtResource("4_u3cyc")]
+position = Vector2(312, -120)
+
+[node name="food4" parent="." unique_id=1933646948 instance=ExtResource("4_u3cyc")]
+position = Vector2(320, -40)
+
+[node name="food5" parent="." unique_id=1949652601 instance=ExtResource("4_u3cyc")]
+position = Vector2(264, -24)

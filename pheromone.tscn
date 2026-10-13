@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://dt3dkmvkkayxp"]
 
+[ext_resource type="Script" uid="uid://21o7a1sqlvi3" path="res://pheromone.gd" id="1_1o1rq"]
 [ext_resource type="Texture2D" uid="uid://gvixjmna8e0s" path="res://assets/white.png" id="1_vgiyv"]
 
 [node name="pheromone" type="Node2D" unique_id=151892970]
+script = ExtResource("1_1o1rq")
 
 [node name="White" type="Sprite2D" parent="." unique_id=70940168]
 texture = ExtResource("1_vgiyv")

@@ -7,15 +7,36 @@ load_path = "res://.godot/imported/ant.png-0707e49ede095c1a1a11b4ccb6383b9d.ctex
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_emoma"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ojnr2"]
+radius = 40.0
+
 [node name="ant" type="CharacterBody2D" unique_id=2110801138]
 collision_layer = 2
 script = ExtResource("1_oav7h")
-speed = 60.0
+speed = 70.0
 rotation_angle = 50.0
 rotation_cooldown = 0.5
+detection_radius = 50.0
 
 [node name="Ant" type="Sprite2D" parent="." unique_id=1504331066]
 texture = SubResource("CompressedTexture2D_5tacl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2141371121]
 shape = SubResource("CircleShape2D_emoma")
+
+[node name="FoodDetectionArea" type="Area2D" parent="." unique_id=1507438079]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FoodDetectionArea" unique_id=1119815571]
+shape = SubResource("CircleShape2D_ojnr2")
+
+[node name="TakeFoodArea" type="Area2D" parent="." unique_id=1200319137]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TakeFoodArea" unique_id=1034452480]
+shape = SubResource("CircleShape2D_emoma")
+
+[connection signal="body_entered" from="FoodDetectionArea" to="." method="_on_food_detection_area_body_entered"]
+[connection signal="body_entered" from="TakeFoodArea" to="." method="_on_take_food_area_body_entered"]
