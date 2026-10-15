@@ -12,7 +12,7 @@ var direction
 var ini_rotation_cooldown
 var target: Node2D
 var takefood = false
-var foundfood = false
+var foundfood = false # might not be useful anymore
 var pheromone : PackedScene = preload("res://pheromone.tscn")
 var ini_pheronome_cooldown
 var allow_pheromone_drop = true
@@ -20,6 +20,7 @@ var target_pheromone: Node2D
 var looking_for_phero_type = 0
 
 @onready var detectArea = $FoodDetectionArea/CollisionShape2D
+@onready var debug = $Label
 
 enum STATE{think, wander, goToFood, followPhero}
 var currentstate : STATE = STATE.think
@@ -51,7 +52,7 @@ func _physics_process(delta: float) -> void:
 				rotation = direction.angle()
 	if takefood and target:
 		target.global_position = global_position
-
+	debug.text = "Current state is " + str(currentstate)
 	_pheromone_timer(delta)
 
 func _think():
@@ -79,20 +80,18 @@ func _go_to_phero():
 			look_at(target_pheromone.global_position)
 		else:
 			target_pheromone = null
-			currentstate = STATE.think
+			currentstate = STATE.wander
 	else:
 		target_pheromone = null
-		currentstate = STATE.think
+		currentstate = STATE.wander
 
 func _on_food_detection_area_body_entered(body: Node2D) -> void:
 	if !body.carried and !target:
 		body.carried = true
 		target = body
 		currentstate = STATE.think
-		foundfood = true
-		$SeekPheromone.rotation = 180
-		await get_tree().process_frame
-		$SeekPheromone.rotation *= 0
+
+
 	else:
 		body = null
 		pass
@@ -111,6 +110,7 @@ func _on_take_food_area_body_entered(body: Node2D) -> void:
 		takefood = true
 		currentstate = STATE.wander
 		rotation_degrees += 180
+		foundfood = true
 
 func _spawn_pheromone():
 	if Global.phero_amount >= Global.total_phero_amount:
@@ -124,17 +124,17 @@ func _spawn_pheromone():
 	get_parent().add_child(instance)
 
 func _on_pheromone_spawn_check_body_entered(body: Node2D) -> void:
-	if !foundfood:
-		if randi_range(0, redundant_pheromone_spawn_chance) == 0:
+	if !takefood:
+		if randi_range(0, redundant_pheromone_spawn_chance) == 1:
 			allow_pheromone_drop = true
 			if redundant_pheromone_spawn_chance >= 4:
 				redundant_pheromone_spawn_chance -= 1
 		else:
 			allow_pheromone_drop = false
 			if body.pheroType == 0:
-				body.strength += pheromone_strength_increase * 2
-			else:
 				body.strength += pheromone_strength_increase
+			else:
+				body.strength += pheromone_strength_increase * 2
 			redundant_pheromone_spawn_chance += 2
 	else:
 		pass
@@ -146,6 +146,9 @@ func _look_for_this_phero_type():
 		looking_for_phero_type = 0 # im trying to go back = go for closer distance
 
 func _on_eye_body_entered(body: Node2D) -> void:
+	if target and !takefood:
+		currentstate = STATE.think
+		return
 	_look_for_this_phero_type()
 	if !target_pheromone:
 		if body.pheroType == looking_for_phero_type:
@@ -164,8 +167,8 @@ func _on_send_food_home_area_entered(area: Area2D) -> void:
 		print("depositing food")
 		foundfood = false
 		target.queue_free()
-		rotation_degrees += 180
 		takefood = false
 		currentstate = STATE.think
+		rotation_degrees += 180
 	else:
 		pass

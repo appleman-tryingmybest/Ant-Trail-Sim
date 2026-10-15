@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://21o7a1sqlvi3" path="res://pheromone.gd" id="1_1o1rq"]
 [ext_resource type="Texture2D" uid="uid://gvixjmna8e0s" path="res://assets/white.png" id="1_vgiyv"]
+[ext_resource type="Script" uid="uid://bag2gc5yt1ngx" path="res://area_2d.gd" id="3_04ntx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ojnr2"]
 size = Vector2(10, 10)
@@ -11,12 +12,15 @@ font_size = 50
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_emoma"]
+size = Vector2(65, 65)
+
 [node name="pheromone" type="StaticBody2D" unique_id=1426408754]
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_1o1rq")
 decay = 1.5
-decay_rate = 0.4
+decay_rate = 0.5
 initial_strength = 30.0
 lifetime_limit = 50.0
 
@@ -34,3 +38,11 @@ offset_right = 79.0
 offset_bottom = 5.0
 text = "HELLO"
 label_settings = SubResource("LabelSettings_ojnr2")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=669217531]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("3_04ntx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1032544413]
+shape = SubResource("RectangleShape2D_emoma")

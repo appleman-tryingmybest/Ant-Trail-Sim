@@ -16,7 +16,6 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if ant_amount < total_ant:
-		ant_amount += 1
 		spawn_cooldown -= delta
 		if spawn_cooldown < 0:
 			_spawn()
@@ -25,6 +24,7 @@ func _process(delta: float) -> void:
 		pass
 
 func _spawn():
+	ant_amount += 1
 	var instance = ant.instantiate()
 	instance.global_position = global_position
 	get_parent().add_child(instance)

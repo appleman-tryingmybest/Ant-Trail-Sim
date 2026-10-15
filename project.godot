@@ -33,6 +33,7 @@ window/stretch/aspect="expand"
 2d_physics/layer_3="food"
 2d_physics/layer_4="pheromone"
 2d_physics/layer_5="home"
+2d_physics/layer_6="distantToPheromon"
 
 [physics]
 

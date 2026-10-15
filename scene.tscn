@@ -27,6 +27,7 @@ distance = -40.0
 script = ExtResource("1_m7jmp")
 
 [node name="background" type="Sprite2D" parent="." unique_id=2087974099]
+visible = false
 modulate = Color(0.50534403, 0.5053441, 0.50534403, 1)
 scale = Vector2(252.9, 142.277)
 texture = ExtResource("1_ulcgi")
@@ -34,21 +35,21 @@ texture = ExtResource("1_ulcgi")
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=665957890]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1347555247]
-position = Vector2(-32, -496)
+position = Vector2(-32, -560)
 shape = SubResource("WorldBoundaryShape2D_ojnr2")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=1458573983]
-position = Vector2(952, 8)
+position = Vector2(1024, 0)
 rotation = 1.5707964
 shape = SubResource("WorldBoundaryShape2D_nxogm")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=1415886488]
-position = Vector2(-8, 496)
+position = Vector2(0, 560)
 rotation = 3.1415927
 shape = SubResource("WorldBoundaryShape2D_3253y")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=572523289]
-position = Vector2(-944, -24)
+position = Vector2(-1024, 0)
 rotation = -1.5707964
 shape = SubResource("WorldBoundaryShape2D_u3cyc")
 
@@ -88,4 +89,4 @@ food_cooldown = 0.5
 
 [node name="home" parent="." unique_id=1209723676 instance=ExtResource("2_nxogm")]
 position = Vector2(-771, 348)
-total_ant = 1500
+total_ant = 200

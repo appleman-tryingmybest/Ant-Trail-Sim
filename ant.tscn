@@ -11,13 +11,16 @@ load_path = "res://.godot/imported/ant.png-0707e49ede095c1a1a11b4ccb6383b9d.ctex
 radius = 40.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6rpyw"]
-radius = 32.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_5tacl"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_oav7h"]
+radius = 56.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5le0k"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oav7h"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5tacl"]
+radius = 12.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y2354"]
 radius = 24.0
@@ -31,8 +34,8 @@ pheronome_cooldown = 0.5
 rotation_angle = 50.0
 rotation_cooldown = 0.5
 detection_radius = 85.0
-redundant_pheromone_spawn_chance = 10
-pheromone_strength_increase = 0.6
+redundant_pheromone_spawn_chance = 200
+pheromone_strength_increase = 1.0
 
 [node name="Ant" type="Sprite2D" parent="." unique_id=1504331066]
 texture = SubResource("CompressedTexture2D_5tacl")
@@ -71,20 +74,20 @@ debug_color = Color(2.9289904, 2.895715, 2.9289904, 0.61960787)
 collision_layer = 0
 collision_mask = 8
 
-[node name="rightArea" type="CollisionShape2D" parent="SeekPheromone/eye" unique_id=77098845]
-position = Vector2(24, 40)
+[node name="leftArea" type="CollisionShape2D" parent="SeekPheromone/eye" unique_id=766079909]
+position = Vector2(16, -48)
 scale = Vector2(2, 2)
-shape = SubResource("CircleShape2D_5tacl")
+shape = SubResource("CircleShape2D_5le0k")
 
 [node name="middleArea" type="CollisionShape2D" parent="SeekPheromone/eye" unique_id=181986146]
 position = Vector2(48, 0)
 scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_oav7h")
 
-[node name="leftArea" type="CollisionShape2D" parent="SeekPheromone/eye" unique_id=766079909]
-position = Vector2(24, -40)
+[node name="rightArea" type="CollisionShape2D" parent="SeekPheromone/eye" unique_id=77098845]
+position = Vector2(16, 48)
 scale = Vector2(2, 2)
-shape = SubResource("CircleShape2D_5le0k")
+shape = SubResource("CircleShape2D_5tacl")
 
 [node name="SendFoodHome" type="Area2D" parent="." unique_id=1897993899]
 collision_layer = 0
@@ -92,6 +95,14 @@ collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SendFoodHome" unique_id=1355778361]
 shape = SubResource("CircleShape2D_y2354")
+
+[node name="Label" type="Label" parent="." unique_id=475344270]
+visible = false
+offset_left = -24.0
+offset_top = -32.0
+offset_right = 16.0
+offset_bottom = -9.0
+text = "State"
 
 [connection signal="body_entered" from="FoodDetectionArea" to="." method="_on_food_detection_area_body_entered"]
 [connection signal="body_entered" from="TakeFoodArea" to="." method="_on_take_food_area_body_entered"]

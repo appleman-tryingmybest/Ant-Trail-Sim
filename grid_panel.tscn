@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bnvabewikr2lr"]
+
+[ext_resource type="Script" uid="uid://bffxoptj0wkxn" path="res://grid_panel.gd" id="1_qpjan"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ojnr2"]
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ojnr2"]
+size = Vector2(93, 89)
+
+[node name="PanelContainer" type="PanelContainer" unique_id=781534377]
+custom_minimum_size = Vector2(32, 32)
+theme_override_styles/panel = SubResource("StyleBoxFlat_ojnr2")
+script = ExtResource("1_qpjan")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=253886921]
+position = Vector2(15, 13)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=278190463]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_ojnr2")

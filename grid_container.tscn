@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://doqu2kk6y4l1e"]
+
+[ext_resource type="Script" uid="uid://bom7slr2b5s2g" path="res://grid_container.gd" id="1_rxlgd"]
+
+[node name="GridContainer" type="GridContainer" unique_id=2127200318]
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 24
+script = ExtResource("1_rxlgd")
+width = 24
+height = 14
+cell_width = 85
+cell_height = 82

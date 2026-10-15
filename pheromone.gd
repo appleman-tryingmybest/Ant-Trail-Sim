@@ -15,6 +15,7 @@ var lifetime: float
 
 @onready var color = $White
 @onready var text = $debug
+@onready var detectionArea = $Area2D
 
 var pheroType: int = 0
 var decayincrease
@@ -38,18 +39,17 @@ func _ready() -> void:
 		decay_rate += 1
 	Global.phero_amount += 1
 	print(Global.phero_amount)
+	detectionArea.pheroType = pheroType
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	lifetime += delta
+	
 	decay_rate -= delta
 	if decay_rate < 0:
 		strength -= decay
 		decay_rate = ini_decay_rate
 	
-	if lifetime > lifetime_limit:
-		decay = decayincrease
-	
+
 	color.modulate.a = remap(strength, initial_strength, 0, 1.0, 0.0)
 	if color.modulate.a <= 0.05:
 		Global.phero_amount -= 1
@@ -57,3 +57,13 @@ func _process(delta: float) -> void:
 	
 	if terrible_debug:
 		text.text = "strength: " + str(strength) + " distance to home: " + str(distance_to_home)
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body == self:
+		return
+	if body.pheroType == 0:
+		body.queue_free()
+		Global.phero_amount -= 1
+	elif body.pheroType == 1 and self.pheroType == 0 or body.strength > self.strength:
+		queue_free()
+		Global.phero_amount -= 1
