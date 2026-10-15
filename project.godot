@@ -15,12 +15,24 @@ run/main_scene="uid://dvss8e7fv1esp"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*uid://sjft4nlv7a3j"
+
 [display]
 
-window/size/viewport_width=1980
-window/size/viewport_height=1080
+window/size/viewport_width=1700
+window/size/viewport_height=960
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[layer_names]
+
+2d_physics/layer_1="wall"
+2d_physics/layer_2="ant"
+2d_physics/layer_3="food"
+2d_physics/layer_4="pheromone"
+2d_physics/layer_5="home"
 
 [physics]
 

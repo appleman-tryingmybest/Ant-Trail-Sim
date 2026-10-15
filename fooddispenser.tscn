@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://b2ed8o36bf6gp"]
+
+[ext_resource type="Script" uid="uid://2f3fb78qhhj7" path="res://fooddispenser.gd" id="1_ae3fn"]
+[ext_resource type="Texture2D" uid="uid://pmmepp86bq7" path="res://icon.svg" id="2_g633e"]
+
+[node name="fooddispenser" type="StaticBody2D" unique_id=199289702]
+script = ExtResource("1_ae3fn")
+food_cooldown = 0.8
+food_limit = 40
+food_spawn_range = 100.0
+
+[node name="icon" type="Sprite2D" parent="." unique_id=913881137]
+texture = ExtResource("2_g633e")

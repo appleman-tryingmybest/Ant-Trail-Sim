@@ -5,28 +5,37 @@ extends CharacterBody2D
 @export var rotation_angle: float = 10
 @export var rotation_cooldown: float = 2
 @export var detection_radius: float = 40
+@export var redundant_pheromone_spawn_chance: int
+@export var pheromone_strength_increase : float
 
 var direction
-var def_rotation_cooldown
+var ini_rotation_cooldown
 var target: Node2D
 var takefood = false
+var foundfood = false
+var pheromone : PackedScene = preload("res://pheromone.tscn")
+var ini_pheronome_cooldown
+var allow_pheromone_drop = true
+var target_pheromone: Node2D
+var looking_for_phero_type = 0
 
 @onready var detectArea = $FoodDetectionArea/CollisionShape2D
 
-enum STATE{think, wander, goToFood}
+enum STATE{think, wander, goToFood, followPhero}
 var currentstate : STATE = STATE.think
 
 func _ready() -> void:
 	detectArea.shape.radius = detection_radius
-	def_rotation_cooldown = rotation_cooldown
+	ini_rotation_cooldown = rotation_cooldown
+	ini_pheronome_cooldown = pheronome_cooldown
 	randomize()
-	print ("my eyes is ", detectArea.shape.radius)
 
 func _physics_process(delta: float) -> void:
 	match currentstate:
-		STATE.think: _think(target)
+		STATE.think: _think()
 		STATE.wander: _wander(delta)
-		STATE.goToFood: _targetfood(target)
+		STATE.goToFood: _targetfood()
+		STATE.followPhero: _go_to_phero()
 	
 	direction = Vector2.RIGHT.rotated(rotation)
 	velocity = speed * direction
@@ -34,43 +43,129 @@ func _physics_process(delta: float) -> void:
 	if get_slide_collision_count() > 0:
 		for i in range(get_slide_collision_count()):
 			var collision = get_slide_collision(i)
-			var normal = collision.get_normal()
-			velocity = velocity.bounce(normal)
-			direction = velocity.normalized()
-			rotation = direction.angle()
+			var collider = collision.get_collider()
+			if collider is Node2D and collider.collision_layer == 1:
+				var normal = collision.get_normal()
+				velocity = velocity.bounce(normal)
+				direction = velocity.normalized()
+				rotation = direction.angle()
 	if takefood and target:
 		target.global_position = global_position
 
-func _think(target: Node2D):
-	if !target:
-		currentstate = STATE.wander
+	_pheromone_timer(delta)
+
+func _think():
+	if target_pheromone != null:
+		currentstate = STATE.followPhero
 	else:
-		currentstate = STATE.goToFood
+		if !target and !takefood:
+			currentstate = STATE.wander
+		elif target and !takefood:
+			currentstate = STATE.goToFood
 
 func _wander(delta: float):
 	rotation_cooldown -= delta
 	if rotation_cooldown < 0:
 		rotation_degrees += randf_range(-rotation_angle, rotation_angle)
-		rotation_cooldown = def_rotation_cooldown
+		rotation_cooldown = ini_rotation_cooldown
 
-func _targetfood(target: Node2D):
-	look_at(target.global_position)
+func _targetfood():
+	if is_instance_valid(target):
+		look_at(target.global_position)
+
+func _go_to_phero():
+	if is_instance_valid(target_pheromone):
+		if global_position.distance_to(target_pheromone.global_position) > 10:
+			look_at(target_pheromone.global_position)
+		else:
+			target_pheromone = null
+			currentstate = STATE.think
+	else:
+		target_pheromone = null
+		currentstate = STATE.think
 
 func _on_food_detection_area_body_entered(body: Node2D) -> void:
 	if !body.carried and !target:
-		print("yummy shit")
 		body.carried = true
 		target = body
 		currentstate = STATE.think
+		foundfood = true
+		$SeekPheromone.rotation = 180
+		await get_tree().process_frame
+		$SeekPheromone.rotation *= 0
 	else:
-		print("look away")
 		body = null
 		pass
 
+func _pheromone_timer(delta: float):
+	pheronome_cooldown -= delta
+	if pheronome_cooldown <= 0:
+		if allow_pheromone_drop:
+			_spawn_pheromone()
+		else:
+			allow_pheromone_drop = true
+		pheronome_cooldown = ini_pheronome_cooldown
 
 func _on_take_food_area_body_entered(body: Node2D) -> void:
 	if body == target:
 		takefood = true
 		currentstate = STATE.wander
+		rotation_degrees += 180
 
- 
+func _spawn_pheromone():
+	if Global.phero_amount >= Global.total_phero_amount:
+		return
+	var instance = pheromone.instantiate()
+	instance.global_position = global_position
+	if !takefood:
+		instance.pheroType = 0
+	else:
+		instance.pheroType = 1
+	get_parent().add_child(instance)
+
+func _on_pheromone_spawn_check_body_entered(body: Node2D) -> void:
+	if !foundfood:
+		if randi_range(0, redundant_pheromone_spawn_chance) == 0:
+			allow_pheromone_drop = true
+			if redundant_pheromone_spawn_chance >= 4:
+				redundant_pheromone_spawn_chance -= 1
+		else:
+			allow_pheromone_drop = false
+			if body.pheroType == 0:
+				body.strength += pheromone_strength_increase * 2
+			else:
+				body.strength += pheromone_strength_increase
+			redundant_pheromone_spawn_chance += 2
+	else:
+		pass
+
+func _look_for_this_phero_type():
+	if !takefood:
+		looking_for_phero_type = 1 # im trying to find trail to food = go for further distance
+	elif takefood:
+		looking_for_phero_type = 0 # im trying to go back = go for closer distance
+
+func _on_eye_body_entered(body: Node2D) -> void:
+	_look_for_this_phero_type()
+	if !target_pheromone:
+		if body.pheroType == looking_for_phero_type:
+			target_pheromone = body
+	elif target_pheromone and target_pheromone.strength < body.strength:
+		if takefood: 
+			if body.distance_to_home < target_pheromone.distance_to_home:# if im going back home i must find closer phero
+				target_pheromone = body
+		elif looking_for_phero_type == 1 and !takefood: # if im finding food i must find furthest
+			if body.distance_to_food < target_pheromone.distance_to_food:
+				target_pheromone = body
+	currentstate = STATE.think
+
+func _on_send_food_home_area_entered(area: Area2D) -> void:
+	if target:
+		print("depositing food")
+		foundfood = false
+		target.queue_free()
+		rotation_degrees += 180
+		takefood = false
+		currentstate = STATE.think
+	else:
+		pass

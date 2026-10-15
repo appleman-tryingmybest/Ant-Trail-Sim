@@ -10,10 +10,12 @@ size = Vector2(300, 300)
 [node name="home" type="Node2D" unique_id=1209723676]
 scale = Vector2(0.53, 0.53)
 script = ExtResource("1_o1ld7")
-total_ant = 2000
+total_ant = 300
 spawn_cooldown = 0.07
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1549150197]
+collision_layer = 16
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=515695491]
 shape = SubResource("RectangleShape2D_ojnr2")
