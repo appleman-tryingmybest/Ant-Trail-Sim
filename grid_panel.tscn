@@ -29,7 +29,7 @@ collision_mask = 0
 script = ExtResource("2_ibfam")
 decay = 1.7
 strength_limit = 30.0
-food_strength_limit = 40.0
+food_strength_limit = 35.0
 refresh_rate = 0.5
 position_refresh = 60.0
 

@@ -42,15 +42,15 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
+	if strength >= strength_limit and pheroType == 0:
+		strength = strength_limit
+	elif strength >= food_strength_limit and pheroType == 1:
+		strength = food_strength_limit
 	decay_rate -= delta
 	if decay_rate < 0:
 		if strength <= -5:
 			strength = -5
-		elif strength >= strength_limit and pheroType == 0:
-			strength = strength_limit
-		elif strength >= food_strength_limit and pheroType == 1:
-			strength = food_strength_limit
-
 		else:
 			strength -= decay
 		decay_rate = ini_decay_rate
