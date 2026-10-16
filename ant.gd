@@ -113,7 +113,7 @@ func _on_eye_body_entered(body: Node2D) -> void:
 		elif body.pheroType == looking_for_phero_type and !takefood:
 			target_pheromone = body
 	elif target_pheromone and target_pheromone.strength < body.strength:
-		if takefood: 
+		if takefood:
 			if body.distance_to_home < target_pheromone.distance_to_home:# if im going back home i must find closer phero
 				target_pheromone = body
 		elif looking_for_phero_type == 1 and !takefood: # if im finding food i must find furthest green spot

@@ -28,8 +28,7 @@ func _ready() -> void:
 	ini_decay_rate = decay_rate
 	ini_refresh_rate = refresh_rate
 	home = get_parent().get_parent().get_parent().get_node("home").global_position
-	if home:
-		distance_to_home = global_position.distance_to(home)
+	distance_to_home = global_position.distance_to(home)
 	food = get_parent().get_parent().get_parent().get_node("fooddispenser").global_position
 	distance_to_food = global_position.distance_to(food)
 	if enable_debug:
@@ -47,9 +46,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	decay_rate -= delta
 	if decay_rate < 0:
-		if strength <= 0:
-			strength = 0
-		strength -= decay
+		if strength <= -5:
+			strength = -5
+		else:
+			strength -= decay
 		decay_rate = ini_decay_rate
 		if pheroType == 1 and strength < 0:
 			pheroType = 0
