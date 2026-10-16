@@ -51,12 +51,11 @@ text = "Number"
 horizontal_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pheromone_block" unique_id=278190463]
-position = Vector2(22, 28)
+position = Vector2(17, 19)
 shape = SubResource("RectangleShape2D_ojnr2")
 
 [node name="point" type="Node2D" parent="." unique_id=793713312]
 
 [node name="Icon" type="Sprite2D" parent="point" unique_id=1407188998]
-visible = false
 scale = Vector2(0.075, 0.075)
 texture = ExtResource("3_xrpty")
