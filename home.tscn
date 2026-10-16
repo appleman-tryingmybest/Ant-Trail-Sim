@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://pmmepp86bq7" path="res://icon.svg" id="3_2ayvv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ojnr2"]
-size = Vector2(300, 300)
+size = Vector2(211.32077, 211.32077)
 
 [node name="home" type="Node2D" unique_id=1209723676]
 scale = Vector2(0.53, 0.53)
@@ -18,6 +18,7 @@ collision_layer = 16
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=515695491]
+position = Vector2(-4.498464e-07, 4.498464e-07)
 shape = SubResource("RectangleShape2D_ojnr2")
 
 [node name="White" type="Sprite2D" parent="." unique_id=1725992054]

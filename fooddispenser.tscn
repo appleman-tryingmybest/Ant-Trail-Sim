@@ -8,6 +8,8 @@ script = ExtResource("1_ae3fn")
 food_cooldown = 0.8
 food_limit = 40
 food_spawn_range = 100.0
+wander_mode = true
+wander_cooldown = 60.0
 
 [node name="icon" type="Sprite2D" parent="." unique_id=913881137]
 texture = ExtResource("2_g633e")

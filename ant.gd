@@ -140,6 +140,6 @@ func _on_pheromone_check_body_entered(body: Node2D) -> void:
 			body.strength += pheromone_strength_increase * 1.3
 			body.pheroType = 1
 
-	elif body.pheroType == 1:
-		body.strength += pheromone_strength_increase * 1.2
+	elif body.pheroType == 1 and takefood:
+		body.strength += pheromone_strength_increase 
 	

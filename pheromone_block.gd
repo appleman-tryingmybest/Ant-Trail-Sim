@@ -13,6 +13,7 @@ var distance_to_home: float
 var distance_to_food: float
 var pheroType: int = 0
 var home
+var food
 var ini_refresh_rate
 var pointer_pos: Vector2
 
@@ -27,7 +28,7 @@ func _ready() -> void:
 	home = get_parent().get_parent().get_parent().get_node("home").global_position
 	if home:
 		distance_to_home = global_position.distance_to(home)
-	var food = get_parent().get_parent().get_parent().get_node("fooddispenser").global_position
+	food = get_parent().get_parent().get_parent().get_node("fooddispenser").global_position
 	distance_to_food = global_position.distance_to(food)
 	if enable_debug:
 		debug.text = str(distance_to_home)
@@ -50,6 +51,10 @@ func _process(delta: float) -> void:
 
 	refresh_rate -= delta
 	if refresh_rate < 0:
+		home = get_parent().get_parent().get_parent().get_node("home").global_position
+		distance_to_home = global_position.distance_to(home)
+		food = get_parent().get_parent().get_parent().get_node("fooddispenser").global_position
+		distance_to_food = global_position.distance_to(food)
 		var look = get_parent()._check()
 		refresh_rate = ini_refresh_rate
 	

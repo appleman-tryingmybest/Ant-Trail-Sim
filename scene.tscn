@@ -26,8 +26,8 @@ distance = -40.0
 script = ExtResource("1_m7jmp")
 
 [node name="home" parent="." unique_id=1209723676 instance=ExtResource("2_nxogm")]
-position = Vector2(-771, 348)
 total_ant = 200
+spread_around = true
 
 [node name="background" type="Sprite2D" parent="." unique_id=2087974099]
 visible = false
@@ -36,6 +36,7 @@ scale = Vector2(252.9, 142.277)
 texture = ExtResource("1_ulcgi")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=665957890]
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1347555247]
 position = Vector2(-32, -560)
@@ -60,9 +61,10 @@ shape = SubResource("WorldBoundaryShape2D_u3cyc")
 zoom = Vector2(0.8, 0.8)
 
 [node name="fooddispenser" parent="." unique_id=199289702 instance=ExtResource("6_y2354")]
-position = Vector2(752, -240)
+position = Vector2(784, -296)
 food_cooldown = 0.2
-food_limit = 80
+food_limit = 45
+food_spawn_range = 65.0
 
 [node name="GridContainer" parent="." unique_id=2127200318 instance=ExtResource("7_ni31j")]
 offset_left = -1064.0
@@ -71,6 +73,6 @@ offset_right = 1068.0
 offset_bottom = 600.0
 columns = 31
 width = 31
-height = 20
+height = 18
 cell_width = 65
-cell_height = 56
+cell_height = 63

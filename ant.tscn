@@ -35,7 +35,7 @@ rotation_angle = 50.0
 rotation_cooldown = 0.5
 detection_radius = 85.0
 redundant_pheromone_spawn_chance = 200
-pheromone_strength_increase = 3.0
+pheromone_strength_increase = 2.0
 
 [node name="Ant" type="Sprite2D" parent="." unique_id=1504331066]
 texture = SubResource("CompressedTexture2D_5tacl")

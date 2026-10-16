@@ -3,6 +3,7 @@ extends Node2D
 @export var ant = preload("res://ant.tscn")
 @export var total_ant: int
 @export var spawn_cooldown: float
+@export var spread_around = false
 
 var ant_amount:= 0
 var def_spawn_cooldown : float
@@ -27,6 +28,8 @@ func _spawn():
 	ant_amount += 1
 	var instance = ant.instantiate()
 	instance.global_position = global_position
+	if spread_around:
+		instance.rotation_degrees += randf_range(0, 360)
 	get_parent().add_child(instance)
 
 func _on_button_button_down() -> void:

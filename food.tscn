@@ -10,7 +10,6 @@ size = Vector2(150, 150)
 z_index = 2
 scale = Vector2(0.2, 0.2)
 collision_layer = 4
-collision_mask = 0
 script = ExtResource("1_pohk7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1201811427]
