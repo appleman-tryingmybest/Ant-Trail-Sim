@@ -11,6 +11,7 @@ z_index = 2
 scale = Vector2(0.2, 0.2)
 collision_layer = 4
 script = ExtResource("1_pohk7")
+lifetime = 75.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1201811427]
 scale = Vector2(0.99999994, 0.99999994)
@@ -18,5 +19,6 @@ shape = SubResource("RectangleShape2D_ojnr2")
 
 [node name="White" type="Sprite2D" parent="." unique_id=1724394544]
 modulate = Color(9.1448425e-07, 0.88766265, 0, 1)
-scale = Vector2(15, 15)
+position = Vector2(-1.66893e-06, 3.0994415e-06)
+scale = Vector2(10, 10)
 texture = ExtResource("1_8txok")

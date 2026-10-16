@@ -102,7 +102,7 @@ func _look_for_this_phero_type(): # 0 is white. 1 is green.
 		looking_for_phero_type = 0 # im trying to go back = go for closer distance
 
 func _on_eye_body_entered(body: Node2D) -> void:
-	if target and !takefood:
+	if target and !takefood and !target_pheromone:
 		currentstate = STATE.think
 		return
 	_look_for_this_phero_type()
