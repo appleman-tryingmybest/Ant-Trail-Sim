@@ -4,11 +4,7 @@
 
 [node name="GridContainer" type="GridContainer" unique_id=2127200318]
 z_index = -1
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 2132.0
+offset_bottom = 1200.0
 columns = 24
 script = ExtResource("1_rxlgd")
-width = 24
-height = 14
-cell_width = 85
-cell_height = 82

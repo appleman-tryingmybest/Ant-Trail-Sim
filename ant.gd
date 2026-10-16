@@ -73,12 +73,8 @@ func _targetfood():
 		look_at(target.global_position)
 
 func _go_to_phero():
-	if is_instance_valid(target_pheromone):
-		if global_position.distance_to(target_pheromone.global_position) > 3:
-			look_at(target_pheromone.global_position)
-		else:
-			target_pheromone = null
-			currentstate = STATE.wander
+	if global_position.distance_to(target_pheromone.pointer_pos) > 6:
+		look_at(target_pheromone.pointer_pos)
 	else:
 		target_pheromone = null
 		currentstate = STATE.wander
@@ -105,13 +101,16 @@ func _look_for_this_phero_type(): # 0 is white. 1 is green.
 	elif takefood:
 		looking_for_phero_type = 0 # im trying to go back = go for closer distance
 
-func _on_eye_body_entered(body: Node2D) -> void: # PROBLEM: stupid ass ants wont follow green spaces
-	if target and !takefood:                     # to go back home and only use white to go back home
-		currentstate = STATE.think               # this causes the ants with food to wander around 
-		return                                   # and making the entire space green
+func _on_eye_body_entered(body: Node2D) -> void:
+	if target and !takefood:
+		currentstate = STATE.think
+		return
 	_look_for_this_phero_type()
 	if !target_pheromone:
-		if body.pheroType == looking_for_phero_type:
+		if takefood:
+			target_pheromone = body
+			return
+		elif body.pheroType == looking_for_phero_type and !takefood:
 			target_pheromone = body
 	elif target_pheromone and target_pheromone.strength < body.strength:
 		if takefood: 
@@ -138,7 +137,7 @@ func _on_pheromone_check_body_entered(body: Node2D) -> void:
 	if body.pheroType == 0:
 		body.strength += pheromone_strength_increase
 		if takefood:
-			body.strength += pheromone_strength_increase * 1.5
+			body.strength += pheromone_strength_increase * 1.3
 			body.pheroType = 1
 
 	elif body.pheroType == 1:

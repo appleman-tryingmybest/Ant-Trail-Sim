@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bffxoptj0wkxn" path="res://grid_panel.gd" id="1_qpjan"]
 [ext_resource type="Script" uid="uid://bhe2ux0e4h627" path="res://pheromone_block.gd" id="2_ibfam"]
+[ext_resource type="Texture2D" uid="uid://pmmepp86bq7" path="res://icon.svg" id="3_xrpty"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ojnr2"]
 bg_color = Color(1, 1, 1, 1)
@@ -16,6 +17,8 @@ size = Vector2(93, 89)
 
 [node name="PanelContainer" type="PanelContainer" unique_id=781534377]
 custom_minimum_size = Vector2(32, 32)
+offset_right = 32.0
+offset_bottom = 32.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ojnr2")
 script = ExtResource("1_qpjan")
 
@@ -24,10 +27,35 @@ position = Vector2(15, 13)
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("2_ibfam")
-decay = 1.0
-strength_limit = 25.0
+decay = 1.4
+strength_limit = 20.0
 refresh_rate = 0.5
 
+[node name="Label" type="Label" parent="pheromone_block" unique_id=1229706061]
+offset_left = -15.0
+offset_top = 7.0
+offset_right = 69.210526
+offset_bottom = 30.0
+scale = Vector2(0.57, 0.57)
+text = "Number"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="pheromone_block" unique_id=1449055032]
+offset_left = -15.0
+offset_top = 26.999998
+offset_right = 69.210526
+offset_bottom = 50.0
+scale = Vector2(0.57, 0.57)
+text = "Number"
+horizontal_alignment = 1
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pheromone_block" unique_id=278190463]
-position = Vector2(32, 32)
+position = Vector2(22, 28)
 shape = SubResource("RectangleShape2D_ojnr2")
+
+[node name="point" type="Node2D" parent="." unique_id=793713312]
+
+[node name="Icon" type="Sprite2D" parent="point" unique_id=1407188998]
+visible = false
+scale = Vector2(0.075, 0.075)
+texture = ExtResource("3_xrpty")

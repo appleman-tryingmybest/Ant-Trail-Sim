@@ -11,7 +11,7 @@ load_path = "res://.godot/imported/ant.png-0707e49ede095c1a1a11b4ccb6383b9d.ctex
 radius = 40.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6rpyw"]
-radius = 56.0
+radius = 40.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5le0k"]
 radius = 12.0
