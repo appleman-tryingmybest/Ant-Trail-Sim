@@ -47,6 +47,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	decay_rate -= delta
 	if decay_rate < 0:
+		if strength <= 0:
+			strength = 0
 		strength -= decay
 		decay_rate = ini_decay_rate
 		if pheroType == 1 and strength < 0:
