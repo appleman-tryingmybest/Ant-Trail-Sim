@@ -22,11 +22,11 @@ script = ExtResource("1_qpjan")
 [node name="pheromone_block" type="StaticBody2D" parent="." unique_id=253886921]
 position = Vector2(15, 13)
 collision_layer = 8
-collision_mask = 2
+collision_mask = 0
 script = ExtResource("2_ibfam")
 decay = 1.0
 strength_limit = 25.0
-refresh_rate = 0.1
+refresh_rate = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pheromone_block" unique_id=278190463]
 position = Vector2(32, 32)

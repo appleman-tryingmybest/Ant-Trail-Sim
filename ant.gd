@@ -99,25 +99,25 @@ func _on_take_food_area_body_entered(body: Node2D) -> void:
 		rotation_degrees += 180
 		foundfood = true
 
-func _look_for_this_phero_type():
+func _look_for_this_phero_type(): # 0 is white. 1 is green.
 	if !takefood:
 		looking_for_phero_type = 1 # im trying to find trail to food = go for further distance
 	elif takefood:
 		looking_for_phero_type = 0 # im trying to go back = go for closer distance
 
-func _on_eye_body_entered(body: Node2D) -> void:
-	if target and !takefood:
-		currentstate = STATE.think
-		return
+func _on_eye_body_entered(body: Node2D) -> void: # PROBLEM: stupid ass ants wont follow green spaces
+	if target and !takefood:                     # to go back home and only use white to go back home
+		currentstate = STATE.think               # this causes the ants with food to wander around 
+		return                                   # and making the entire space green
 	_look_for_this_phero_type()
 	if !target_pheromone:
 		if body.pheroType == looking_for_phero_type:
 			target_pheromone = body
 	elif target_pheromone and target_pheromone.strength < body.strength:
 		if takefood: 
-			if body.distance_to_home < target_pheromone.distance_to_home and (looking_for_phero_type == 0 or looking_for_phero_type == 1):# if im going back home i must find closer phero
+			if body.distance_to_home < target_pheromone.distance_to_home:# if im going back home i must find closer phero
 				target_pheromone = body
-		elif looking_for_phero_type == 1 and !takefood: # if im finding food i must find furthest
+		elif looking_for_phero_type == 1 and !takefood: # if im finding food i must find furthest green spot
 			if body.distance_to_food < target_pheromone.distance_to_food:
 				target_pheromone = body
 	currentstate = STATE.think
@@ -138,8 +138,9 @@ func _on_pheromone_check_body_entered(body: Node2D) -> void:
 	if body.pheroType == 0:
 		body.strength += pheromone_strength_increase
 		if takefood:
-			body.pheroType = 1
 			body.strength += pheromone_strength_increase * 1.5
+			body.pheroType = 1
+
 	elif body.pheroType == 1:
 		body.strength += pheromone_strength_increase * 1.2
 	

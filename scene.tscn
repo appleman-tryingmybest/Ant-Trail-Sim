@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://dkp1rjqweoycl" path="res://scene.gd" id="1_m7jmp"]
 [ext_resource type="Texture2D" uid="uid://gvixjmna8e0s" path="res://assets/white.png" id="1_ulcgi"]
 [ext_resource type="PackedScene" uid="uid://bixmfq2u5pwh7" path="res://home.tscn" id="2_nxogm"]
-[ext_resource type="PackedScene" uid="uid://c5qsgbij8mkhs" path="res://rock.tscn" id="3_3253y"]
 [ext_resource type="PackedScene" uid="uid://dloxqqi56lstd" path="res://food.tscn" id="4_u3cyc"]
 [ext_resource type="PackedScene" uid="uid://b2ed8o36bf6gp" path="res://fooddispenser.tscn" id="6_y2354"]
 [ext_resource type="PackedScene" uid="uid://doqu2kk6y4l1e" path="res://grid_container.tscn" id="7_ni31j"]
@@ -61,18 +60,6 @@ shape = SubResource("WorldBoundaryShape2D_u3cyc")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1929374387]
 zoom = Vector2(0.8, 0.8)
 
-[node name="rock" parent="." unique_id=675800118 instance=ExtResource("3_3253y")]
-position = Vector2(-80, 264)
-
-[node name="rock2" parent="." unique_id=1072115784 instance=ExtResource("3_3253y")]
-position = Vector2(-408, 176)
-
-[node name="rock3" parent="." unique_id=1815958561 instance=ExtResource("3_3253y")]
-position = Vector2(-152, -64)
-
-[node name="rock4" parent="." unique_id=1647480675 instance=ExtResource("3_3253y")]
-position = Vector2(104, 72)
-
 [node name="food" parent="." unique_id=1568168608 instance=ExtResource("4_u3cyc")]
 position = Vector2(256, -96)
 
@@ -97,6 +84,6 @@ offset_left = -1064.0
 offset_top = -600.0
 offset_right = 1068.0
 offset_bottom = 1804.0
-columns = 31
-width = 31
-height = 18
+columns = 27
+width = 27
+cell_width = 75

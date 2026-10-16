@@ -1,25 +1,25 @@
 @tool
 extends GridContainer
 
-@export var width = 5:
+@export var width = 24:
 	set(value):
 		width = value
 		_remove_grid()
 		_create_grid()
 
-@export var height = 5:
+@export var height = 14:
 	set(value):
 		height = value
 		_remove_grid()
 		_create_grid()
 
-@export var cell_width = 100:
+@export var cell_width = 85:
 	set(value):
 		cell_width = value
 		_remove_grid()
 		_create_grid()
 
-@export var cell_height = 100:
+@export var cell_height = 82:
 	set(value):
 		cell_height = value
 		_remove_grid()
