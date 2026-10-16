@@ -3,6 +3,7 @@ extends StaticBody2D
 @export var decay: float
 @export var decay_rate: float = 1
 @export var strength_limit: float
+@export var food_strength_limit: float
 @export var refresh_rate: float
 @export var enable_debug = false
 @export var position_refresh: float
@@ -45,6 +46,11 @@ func _process(delta: float) -> void:
 	if decay_rate < 0:
 		if strength <= -5:
 			strength = -5
+		elif strength >= strength_limit and pheroType == 0:
+			strength = strength_limit
+		elif strength >= food_strength_limit and pheroType == 1:
+			strength = food_strength_limit
+
 		else:
 			strength -= decay
 		decay_rate = ini_decay_rate
@@ -58,8 +64,9 @@ func _process(delta: float) -> void:
 	
 	position_refresh -= delta
 	if position_refresh < 0:
-		_recheck_position_of_targets()
 		position_refresh = ini_position_refresh
+		_recheck_position_of_targets()
+
 
 func _recheck_position_of_targets():
 	home = get_parent().get_parent().get_parent().get_node("home").global_position

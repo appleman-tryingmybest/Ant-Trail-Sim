@@ -20,6 +20,7 @@ var looking_for_phero_type = 0
 
 @onready var detectArea = $FoodDetectionArea/CollisionShape2D
 @onready var debug = $Label
+@onready var ant_color = $Ant
 
 enum STATE{think, wander, goToFood, followPhero}
 var currentstate : STATE = STATE.think
@@ -52,6 +53,10 @@ func _physics_process(delta: float) -> void:
 	if takefood and target:
 		target.global_position = global_position
 	debug.text = "Current state is " + str(currentstate)
+	if !takefood:
+		ant_color.modulate = Color(0, 0, 0)
+	else:
+		ant_color.modulate = Color(0, 1, 0)
 
 func _think():
 	if target_pheromone != null:

@@ -26,6 +26,7 @@ distance = -40.0
 script = ExtResource("1_m7jmp")
 
 [node name="home" parent="." unique_id=1209723676 instance=ExtResource("2_nxogm")]
+position = Vector2(-824, -440)
 total_ant = 200
 spread_around = true
 
@@ -61,10 +62,11 @@ shape = SubResource("WorldBoundaryShape2D_u3cyc")
 zoom = Vector2(0.8, 0.8)
 
 [node name="fooddispenser" parent="." unique_id=199289702 instance=ExtResource("6_y2354")]
-position = Vector2(784, -296)
+position = Vector2(864, 416)
 food_cooldown = 0.2
 food_limit = 65
 food_spawn_range = 65.0
+wander_mode = false
 
 [node name="GridContainer" parent="." unique_id=2127200318 instance=ExtResource("7_ni31j")]
 offset_left = -1064.0

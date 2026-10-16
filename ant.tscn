@@ -1,9 +1,7 @@
 [gd_scene format=3 uid="uid://cno3c86pj1i63"]
 
 [ext_resource type="Script" uid="uid://cpiuits5tldw" path="res://ant.gd" id="1_oav7h"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5tacl"]
-load_path = "res://.godot/imported/ant.png-0707e49ede095c1a1a11b4ccb6383b9d.ctex"
+[ext_resource type="Texture2D" uid="uid://dfnwlvgqfm1ox" path="res://assets/ant.png" id="2_5tacl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_emoma"]
 
@@ -38,11 +36,11 @@ redundant_pheromone_spawn_chance = 200
 pheromone_strength_increase = 2.0
 
 [node name="Ant" type="Sprite2D" parent="." unique_id=1504331066]
-texture = SubResource("CompressedTexture2D_5tacl")
+texture = ExtResource("2_5tacl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2141371121]
 shape = SubResource("CircleShape2D_emoma")
-debug_color = Color(1.2136861, 0.9650252, 1.540184e-06, 1)
+debug_color = Color(1.2138249, 0.9638566, 0, 0)
 
 [node name="FoodDetectionArea" type="Area2D" parent="." unique_id=1507438079]
 collision_layer = 0
@@ -50,7 +48,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FoodDetectionArea" unique_id=1119815571]
 shape = SubResource("CircleShape2D_ojnr2")
-debug_color = Color(0.8481508, 0.35407123, 0.34007853, 0.41960785)
+debug_color = Color(0.84705883, 0.3529412, 0.34117648, 0)
 
 [node name="TakeFoodArea" type="Area2D" parent="." unique_id=1200319137]
 collision_layer = 0
@@ -58,7 +56,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TakeFoodArea" unique_id=1034452480]
 shape = SubResource("CircleShape2D_emoma")
-debug_color = Color(1.2136861, 0.9650252, 1.540184e-06, 1)
+debug_color = Color(1.2138249, 0.9638566, 0, 0)
 
 [node name="PheromoneCheck" type="Area2D" parent="." unique_id=310450784]
 collision_layer = 0
@@ -66,7 +64,7 @@ collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PheromoneCheck" unique_id=236208339]
 shape = SubResource("CircleShape2D_6rpyw")
-debug_color = Color(2.9289904, 2.895715, 2.9289904, 0.61960787)
+debug_color = Color(2.9289904, 2.895715, 2.9289904, 0)
 
 [node name="SeekPheromone" type="Node2D" parent="." unique_id=1563152995]
 
