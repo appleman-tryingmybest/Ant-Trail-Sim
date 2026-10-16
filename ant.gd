@@ -74,7 +74,7 @@ func _targetfood():
 
 func _go_to_phero():
 	if is_instance_valid(target_pheromone):
-		if global_position.distance_to(target_pheromone.global_position) > 10:
+		if global_position.distance_to(target_pheromone.global_position) > 3:
 			look_at(target_pheromone.global_position)
 		else:
 			target_pheromone = null
@@ -139,7 +139,7 @@ func _on_pheromone_check_body_entered(body: Node2D) -> void:
 		body.strength += pheromone_strength_increase
 		if takefood:
 			body.pheroType = 1
-			body.strength = pheromone_strength_increase * 1.5
+			body.strength += pheromone_strength_increase * 1.5
 	elif body.pheroType == 1:
 		body.strength += pheromone_strength_increase * 1.2
 	
