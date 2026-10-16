@@ -35,7 +35,7 @@ rotation_angle = 50.0
 rotation_cooldown = 0.5
 detection_radius = 85.0
 redundant_pheromone_spawn_chance = 200
-pheromone_strength_increase = 1.0
+pheromone_strength_increase = 3.0
 
 [node name="Ant" type="Sprite2D" parent="." unique_id=1504331066]
 texture = SubResource("CompressedTexture2D_5tacl")
@@ -60,11 +60,11 @@ collision_mask = 4
 shape = SubResource("CircleShape2D_emoma")
 debug_color = Color(1.2136861, 0.9650252, 1.540184e-06, 1)
 
-[node name="PheromoneSpawnCheck" type="Area2D" parent="." unique_id=310450784]
+[node name="PheromoneCheck" type="Area2D" parent="." unique_id=310450784]
 collision_layer = 0
 collision_mask = 8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PheromoneSpawnCheck" unique_id=236208339]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PheromoneCheck" unique_id=236208339]
 shape = SubResource("CircleShape2D_6rpyw")
 debug_color = Color(2.9289904, 2.895715, 2.9289904, 0.61960787)
 
@@ -106,6 +106,6 @@ text = "State"
 
 [connection signal="body_entered" from="FoodDetectionArea" to="." method="_on_food_detection_area_body_entered"]
 [connection signal="body_entered" from="TakeFoodArea" to="." method="_on_take_food_area_body_entered"]
-[connection signal="body_entered" from="PheromoneSpawnCheck" to="." method="_on_pheromone_spawn_check_body_entered"]
+[connection signal="body_entered" from="PheromoneCheck" to="." method="_on_pheromone_check_body_entered"]
 [connection signal="body_entered" from="SeekPheromone/eye" to="." method="_on_eye_body_entered"]
 [connection signal="area_entered" from="SendFoodHome" to="." method="_on_send_food_home_area_entered"]

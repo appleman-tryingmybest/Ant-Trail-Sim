@@ -13,7 +13,6 @@ var ini_rotation_cooldown
 var target: Node2D
 var takefood = false
 var foundfood = false # might not be useful anymore
-var pheromone : PackedScene = preload("res://pheromone.tscn")
 var ini_pheronome_cooldown
 var allow_pheromone_drop = true
 var target_pheromone: Node2D
@@ -53,7 +52,6 @@ func _physics_process(delta: float) -> void:
 	if takefood and target:
 		target.global_position = global_position
 	debug.text = "Current state is " + str(currentstate)
-	_pheromone_timer(delta)
 
 func _think():
 	if target_pheromone != null:
@@ -90,20 +88,9 @@ func _on_food_detection_area_body_entered(body: Node2D) -> void:
 		body.carried = true
 		target = body
 		currentstate = STATE.think
-
-
 	else:
 		body = null
 		pass
-
-func _pheromone_timer(delta: float):
-	pheronome_cooldown -= delta
-	if pheronome_cooldown <= 0:
-		if allow_pheromone_drop:
-			_spawn_pheromone()
-		else:
-			allow_pheromone_drop = true
-		pheronome_cooldown = ini_pheronome_cooldown
 
 func _on_take_food_area_body_entered(body: Node2D) -> void:
 	if body == target:
@@ -111,33 +98,6 @@ func _on_take_food_area_body_entered(body: Node2D) -> void:
 		currentstate = STATE.wander
 		rotation_degrees += 180
 		foundfood = true
-
-func _spawn_pheromone():
-	if Global.phero_amount >= Global.total_phero_amount:
-		return
-	var instance = pheromone.instantiate()
-	instance.global_position = global_position
-	if !takefood:
-		instance.pheroType = 0
-	else:
-		instance.pheroType = 1
-	get_parent().add_child(instance)
-
-func _on_pheromone_spawn_check_body_entered(body: Node2D) -> void:
-	if !takefood:
-		if randi_range(0, redundant_pheromone_spawn_chance) == 1:
-			allow_pheromone_drop = true
-			if redundant_pheromone_spawn_chance >= 4:
-				redundant_pheromone_spawn_chance -= 1
-		else:
-			allow_pheromone_drop = false
-			if body.pheroType == 0:
-				body.strength += pheromone_strength_increase
-			else:
-				body.strength += pheromone_strength_increase * 2
-			redundant_pheromone_spawn_chance += 2
-	else:
-		pass
 
 func _look_for_this_phero_type():
 	if !takefood:
@@ -155,7 +115,7 @@ func _on_eye_body_entered(body: Node2D) -> void:
 			target_pheromone = body
 	elif target_pheromone and target_pheromone.strength < body.strength:
 		if takefood: 
-			if body.distance_to_home < target_pheromone.distance_to_home:# if im going back home i must find closer phero
+			if body.distance_to_home < target_pheromone.distance_to_home and (looking_for_phero_type == 0 or looking_for_phero_type == 1):# if im going back home i must find closer phero
 				target_pheromone = body
 		elif looking_for_phero_type == 1 and !takefood: # if im finding food i must find furthest
 			if body.distance_to_food < target_pheromone.distance_to_food:
@@ -172,3 +132,14 @@ func _on_send_food_home_area_entered(area: Area2D) -> void:
 		rotation_degrees += 180
 	else:
 		pass
+
+
+func _on_pheromone_check_body_entered(body: Node2D) -> void:
+	if body.pheroType == 0:
+		body.strength += pheromone_strength_increase
+		if takefood:
+			body.pheroType = 1
+			body.strength = pheromone_strength_increase * 1.5
+	elif body.pheroType == 1:
+		body.strength += pheromone_strength_increase * 1.2
+	

@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://bnvabewikr2lr"]
 
 [ext_resource type="Script" uid="uid://bffxoptj0wkxn" path="res://grid_panel.gd" id="1_qpjan"]
+[ext_resource type="Script" uid="uid://bhe2ux0e4h627" path="res://pheromone_block.gd" id="2_ibfam"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ojnr2"]
+bg_color = Color(1, 1, 1, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -17,11 +19,15 @@ custom_minimum_size = Vector2(32, 32)
 theme_override_styles/panel = SubResource("StyleBoxFlat_ojnr2")
 script = ExtResource("1_qpjan")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=253886921]
+[node name="pheromone_block" type="StaticBody2D" parent="." unique_id=253886921]
 position = Vector2(15, 13)
-collision_layer = 0
-collision_mask = 0
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("2_ibfam")
+decay = 1.0
+strength_limit = 40.0
+refresh_rate = 0.1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=278190463]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pheromone_block" unique_id=278190463]
 position = Vector2(32, 32)
 shape = SubResource("RectangleShape2D_ojnr2")

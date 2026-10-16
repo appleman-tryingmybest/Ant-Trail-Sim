@@ -32,6 +32,8 @@ var border_size = 4
 func _ready() -> void:
 	_create_grid()
 
+	
+
 func _create_grid():
 	columns = width
 	

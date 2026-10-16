@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c5qsgbij8mkhs" path="res://rock.tscn" id="3_3253y"]
 [ext_resource type="PackedScene" uid="uid://dloxqqi56lstd" path="res://food.tscn" id="4_u3cyc"]
 [ext_resource type="PackedScene" uid="uid://b2ed8o36bf6gp" path="res://fooddispenser.tscn" id="6_y2354"]
+[ext_resource type="PackedScene" uid="uid://doqu2kk6y4l1e" path="res://grid_container.tscn" id="7_ni31j"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ojnr2"]
 normal = Vector2(0, 1)
@@ -25,6 +26,10 @@ distance = -40.0
 
 [node name="Scene" type="Node2D" unique_id=1798033359]
 script = ExtResource("1_m7jmp")
+
+[node name="home" parent="." unique_id=1209723676 instance=ExtResource("2_nxogm")]
+position = Vector2(-771, 348)
+total_ant = 200
 
 [node name="background" type="Sprite2D" parent="." unique_id=2087974099]
 visible = false
@@ -87,6 +92,11 @@ position = Vector2(264, -24)
 position = Vector2(282, -74)
 food_cooldown = 0.5
 
-[node name="home" parent="." unique_id=1209723676 instance=ExtResource("2_nxogm")]
-position = Vector2(-771, 348)
-total_ant = 200
+[node name="GridContainer" parent="." unique_id=2127200318 instance=ExtResource("7_ni31j")]
+offset_left = -1064.0
+offset_top = -600.0
+offset_right = 1068.0
+offset_bottom = 1804.0
+columns = 31
+width = 31
+height = 18
