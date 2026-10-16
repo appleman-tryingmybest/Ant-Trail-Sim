@@ -57,5 +57,6 @@ shape = SubResource("RectangleShape2D_ojnr2")
 [node name="point" type="Node2D" parent="." unique_id=793713312]
 
 [node name="Icon" type="Sprite2D" parent="point" unique_id=1407188998]
+visible = false
 scale = Vector2(0.075, 0.075)
 texture = ExtResource("3_xrpty")

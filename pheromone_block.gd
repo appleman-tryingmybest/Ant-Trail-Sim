@@ -24,23 +24,20 @@ var ini_position_refresh
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	await get_tree().process_frame
 	ini_decay_rate = decay_rate
 	ini_refresh_rate = refresh_rate
-	home = get_parent().get_parent().get_parent().get_node("home").global_position
-	distance_to_home = global_position.distance_to(home)
-	food = get_parent().get_parent().get_parent().get_node("fooddispenser").global_position
-	distance_to_food = global_position.distance_to(food)
 	if enable_debug:
 		debug.text = str(distance_to_home)
 		debug2.text = str(distance_to_food)
 	elif !enable_debug:
 		debug.hide()
 		debug2.hide()
+	await get_tree().process_frame
 	var point = get_parent().pointer_position
 	pointer_pos = point.global_position
 	print(pointer_pos)
 	ini_position_refresh = position_refresh
+	_recheck_position_of_targets()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -61,9 +58,11 @@ func _process(delta: float) -> void:
 	
 	position_refresh -= delta
 	if position_refresh < 0:
-		home = get_parent().get_parent().get_parent().get_node("home").global_position
-		distance_to_home = global_position.distance_to(home)
-		food = get_parent().get_parent().get_parent().get_node("fooddispenser").global_position
-		distance_to_food = global_position.distance_to(food)
+		_recheck_position_of_targets()
 		position_refresh = ini_position_refresh
-	
+
+func _recheck_position_of_targets():
+	home = get_parent().get_parent().get_parent().get_node("home").global_position
+	distance_to_home = global_position.distance_to(home)
+	food = get_parent().get_parent().get_parent().get_node("fooddispenser").global_position
+	distance_to_food = global_position.distance_to(food)

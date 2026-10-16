@@ -20,7 +20,6 @@ func _ready():
 	stylebox = get_theme_stylebox("panel").duplicate()
 	stylebox.bg_color = Color(my_color.r, my_color.g, my_color.b, alpha)
 	col.shape = col.shape.duplicate()
-	await get_tree().create_timer(1).timeout
 	cell_height = get_parent().cell_height
 	cell_width = get_parent().cell_width
 	_resizeCol()

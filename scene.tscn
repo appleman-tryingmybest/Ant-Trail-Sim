@@ -63,7 +63,7 @@ zoom = Vector2(0.8, 0.8)
 [node name="fooddispenser" parent="." unique_id=199289702 instance=ExtResource("6_y2354")]
 position = Vector2(784, -296)
 food_cooldown = 0.2
-food_limit = 45
+food_limit = 65
 food_spawn_range = 65.0
 
 [node name="GridContainer" parent="." unique_id=2127200318 instance=ExtResource("7_ni31j")]
