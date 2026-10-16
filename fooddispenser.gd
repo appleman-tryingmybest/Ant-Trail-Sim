@@ -15,7 +15,8 @@ var ini_wander_cooldown
 func _ready() -> void:
 	ini_food_cooldown = food_cooldown
 	ini_wander_cooldown = wander_cooldown
-	_wander()
+	if wander_mode:
+		_wander()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

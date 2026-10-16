@@ -30,6 +30,7 @@ script = ExtResource("2_ibfam")
 decay = 1.4
 strength_limit = 20.0
 refresh_rate = 0.5
+position_refresh = 60.0
 
 [node name="Label" type="Label" parent="pheromone_block" unique_id=1229706061]
 offset_left = -15.0

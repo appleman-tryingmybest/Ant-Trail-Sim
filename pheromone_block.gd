@@ -5,6 +5,7 @@ extends StaticBody2D
 @export var strength_limit: float
 @export var refresh_rate: float
 @export var enable_debug = false
+@export var position_refresh: float
 
 var ownerant: Node2D
 var ini_decay_rate: float
@@ -16,6 +17,7 @@ var home
 var food
 var ini_refresh_rate
 var pointer_pos: Vector2
+var ini_position_refresh
 
 @onready var debug = $Label
 @onready var debug2 = $Label2
@@ -39,6 +41,7 @@ func _ready() -> void:
 	var point = get_parent().pointer_position
 	pointer_pos = point.global_position
 	print(pointer_pos)
+	ini_position_refresh = position_refresh
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -51,10 +54,14 @@ func _process(delta: float) -> void:
 
 	refresh_rate -= delta
 	if refresh_rate < 0:
+		var look = get_parent()._check()
+		refresh_rate = ini_refresh_rate
+	
+	position_refresh -= delta
+	if position_refresh < 0:
 		home = get_parent().get_parent().get_parent().get_node("home").global_position
 		distance_to_home = global_position.distance_to(home)
 		food = get_parent().get_parent().get_parent().get_node("fooddispenser").global_position
 		distance_to_food = global_position.distance_to(food)
-		var look = get_parent()._check()
-		refresh_rate = ini_refresh_rate
+		position_refresh = ini_position_refresh
 	
