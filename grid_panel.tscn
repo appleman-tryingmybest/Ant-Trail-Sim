@@ -15,6 +15,9 @@ border_color = Color(0, 0, 0, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ojnr2"]
 size = Vector2(93, 89)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xrpty"]
+size = Vector2(93, 89)
+
 [node name="PanelContainer" type="PanelContainer" unique_id=781534377]
 custom_minimum_size = Vector2(32, 32)
 offset_right = 32.0
@@ -54,6 +57,7 @@ horizontal_alignment = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pheromone_block" unique_id=278190463]
 position = Vector2(17, 19)
 shape = SubResource("RectangleShape2D_ojnr2")
+debug_color = Color(0, 0.6, 0.69803923, 0.39607844)
 
 [node name="point" type="Node2D" parent="." unique_id=793713312]
 
@@ -61,3 +65,15 @@ shape = SubResource("RectangleShape2D_ojnr2")
 visible = false
 scale = Vector2(0.075, 0.075)
 texture = ExtResource("3_xrpty")
+
+[node name="wall_detect" type="Area2D" parent="." unique_id=723202862]
+position = Vector2(15, 13)
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_detect" unique_id=1359937703]
+position = Vector2(17, 19)
+shape = SubResource("RectangleShape2D_xrpty")
+debug_color = Color(0.98039216, 0, 0.3764706, 0.2784314)
+
+[connection signal="body_entered" from="wall_detect" to="pheromone_block" method="_on_wall_detect_body_entered"]

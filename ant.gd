@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 		for i in range(get_slide_collision_count()):
 			var collision = get_slide_collision(i)
 			var collider = collision.get_collider()
-			if collider is Node2D and collider.collision_layer == 1:
+			if collider is Node2D and (collider.collision_layer == 1 or collider.collision_layer == 7):
 				var normal = collision.get_normal()
 				velocity = velocity.bounce(normal)
 				direction = velocity.normalized()
@@ -86,7 +86,7 @@ func _targetfood():
 	look_at(target.global_position)
 
 func _go_to_phero():
-	if global_position.distance_to(target_pheromone.pointer_pos) > 6:
+	if global_position.distance_to(target_pheromone.pointer_pos) > 10:
 		look_at(target_pheromone.pointer_pos)
 	else:
 		target_pheromone = null

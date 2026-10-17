@@ -19,6 +19,7 @@ var food
 var ini_refresh_rate
 var pointer_pos: Vector2
 var ini_position_refresh
+var is_blocked = false
 
 @onready var debug = $Label
 @onready var debug2 = $Label2
@@ -42,6 +43,11 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if is_blocked:
+		strength = -10
+		return
+	else:
+		pass
 	
 	if strength >= strength_limit and pheroType == 0:
 		strength = strength_limit
@@ -73,3 +79,7 @@ func _recheck_position_of_targets():
 	distance_to_home = global_position.distance_to(home)
 	food = get_parent().get_parent().get_parent().get_node("fooddispenser").global_position
 	distance_to_food = global_position.distance_to(food)
+
+
+func _on_wall_detect_body_entered(body: Node2D) -> void:
+	is_blocked = true

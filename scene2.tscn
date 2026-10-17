@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://sp1huboi4v5q"]
+
+[ext_resource type="PackedScene" uid="uid://dvss8e7fv1esp" path="res://scene.tscn" id="1_g28hq"]
+[ext_resource type="PackedScene" uid="uid://druak7r2xns7a" path="res://wall.tscn" id="2_3hvph"]
+
+[node name="Scene" unique_id=1798033359 instance=ExtResource("1_g28hq")]
+
+[node name="home" parent="." index="0" unique_id=1209723676]
+position = Vector2(-872, -400)
+
+[node name="fooddispenser" parent="." index="4" unique_id=199289702]
+position = Vector2(872, 488)
+wander_mode = false
+
+[node name="GridContainer" parent="." index="5" unique_id=2127200318]
+cell_height = 65
+
+[node name="walls" type="Node2D" parent="." index="6" unique_id=1154997025]
+z_index = 6
+
+[node name="wall" parent="walls" index="0" unique_id=1901888591 instance=ExtResource("2_3hvph")]
+position = Vector2(-592.00006, 320)
+
+[node name="wall2" parent="walls" index="1" unique_id=760617772 instance=ExtResource("2_3hvph")]
+position = Vector2(-232, 656)
+scale = Vector2(23.305, 115.095)
+
+[node name="wall3" parent="walls" index="2" unique_id=809724745 instance=ExtResource("2_3hvph")]
+position = Vector2(-141, -189)
+rotation = 1.5707964
+
+[node name="wall4" parent="walls" index="3" unique_id=2003590546 instance=ExtResource("2_3hvph")]
+position = Vector2(160, 240)
+rotation = 1.5707964
