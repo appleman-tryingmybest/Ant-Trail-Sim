@@ -21,6 +21,7 @@ var looking_for_phero_type = 0
 @onready var detectArea = $FoodDetectionArea/CollisionShape2D
 @onready var debug = $Label
 @onready var ant_color = $Ant
+@onready var take_food_area = $TakeFoodArea
 
 enum STATE{think, wander, goToFood, followPhero}
 var currentstate : STATE = STATE.think
@@ -74,8 +75,15 @@ func _wander(delta: float):
 		rotation_cooldown = ini_rotation_cooldown
 
 func _targetfood():
-	if is_instance_valid(target):
-		look_at(target.global_position)
+	if !is_instance_valid(target):
+		target = null
+		currentstate = STATE.think
+		return
+	# body_entered does not fire if the food was already overlapping when claimed
+	if take_food_area.overlaps_body(target):
+		_pick_up_food()
+		return
+	look_at(target.global_position)
 
 func _go_to_phero():
 	if global_position.distance_to(target_pheromone.pointer_pos) > 6:
@@ -95,10 +103,13 @@ func _on_food_detection_area_body_entered(body: Node2D) -> void:
 
 func _on_take_food_area_body_entered(body: Node2D) -> void:
 	if body == target:
-		takefood = true
-		currentstate = STATE.wander
-		rotation_degrees += 180
-		foundfood = true
+		_pick_up_food()
+
+func _pick_up_food():
+	takefood = true
+	currentstate = STATE.wander
+	rotation_degrees += 180
+	foundfood = true
 
 func _look_for_this_phero_type(): # 0 is white. 1 is green.
 	if !takefood:
