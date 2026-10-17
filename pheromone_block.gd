@@ -10,7 +10,15 @@ extends StaticBody2D
 
 var ownerant: Node2D
 var ini_decay_rate: float
-var strength: float
+# Clamped on write. Replaces the per-frame clamp and blocked reset that ran in _process.
+var strength: float:
+	set(value):
+		if is_blocked:
+			strength = -10
+		elif pheroType == 0:
+			strength = min(value, strength_limit)
+		else:
+			strength = min(value, food_strength_limit)
 var distance_to_home: float
 var distance_to_food: float
 var pheroType: int = 0
@@ -28,6 +36,7 @@ var is_blocked = false
 func _ready() -> void:
 	ini_decay_rate = decay_rate
 	ini_refresh_rate = refresh_rate
+	Global.register_block(self)
 	if enable_debug:
 		debug.text = str(distance_to_home)
 		debug2.text = str(distance_to_food)
@@ -41,37 +50,29 @@ func _ready() -> void:
 	ini_position_refresh = position_refresh
 	_recheck_position_of_targets()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	if is_blocked:
-		strength = -10
-		return
-	else:
-		pass
-	
-	if strength >= strength_limit and pheroType == 0:
-		strength = strength_limit
-	elif strength >= food_strength_limit and pheroType == 1:
-		strength = food_strength_limit
-	decay_rate -= delta
-	if decay_rate < 0:
-		if strength <= -5:
-			strength = -5
-		else:
-			strength -= decay
-		decay_rate = ini_decay_rate
-		if pheroType == 1 and strength < 0:
-			pheroType = 0
+func _exit_tree() -> void:
+	Global.unregister_block(self)
 
-	refresh_rate -= delta
-	if refresh_rate < 0:
-		var look = get_parent()._check()
-		refresh_rate = ini_refresh_rate
-	
-	position_refresh -= delta
-	if position_refresh < 0:
-		position_refresh = ini_position_refresh
-		_recheck_position_of_targets()
+# Tick functions are called by Global on shared timers.
+func decay_tick() -> void:
+	if is_blocked:
+		return
+	if strength <= -5:
+		strength = -5
+	else:
+		strength -= decay
+	if pheroType == 1 and strength < 0:
+		pheroType = 0
+
+func refresh_tick() -> void:
+	if is_blocked:
+		return
+	get_parent()._check()
+
+func position_tick() -> void:
+	if is_blocked:
+		return
+	_recheck_position_of_targets()
 
 
 func _recheck_position_of_targets():
@@ -83,3 +84,4 @@ func _recheck_position_of_targets():
 
 func _on_wall_detect_body_entered(body: Node2D) -> void:
 	is_blocked = true
+	strength = -10
