@@ -13,7 +13,8 @@ position = Vector2(872, 488)
 wander_mode = false
 
 [node name="GridContainer" parent="." index="5" unique_id=2127200318]
-cell_height = 65
+height = 17
+cell_height = 67
 
 [node name="walls" type="Node2D" parent="." index="6" unique_id=1154997025]
 z_index = 6

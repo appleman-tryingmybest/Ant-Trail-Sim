@@ -44,11 +44,10 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if is_blocked:
-		strength = -10
+		strength = -99
 		return
 	else:
 		pass
-	
 	if strength >= strength_limit and pheroType == 0:
 		strength = strength_limit
 	elif strength >= food_strength_limit and pheroType == 1:
