@@ -37,8 +37,11 @@ func _resizeCol():
 	pointer_position.position = Vector2(cell_width/2, cell_height/2)
 
 func _check():
-	if info.strength == -10:
-		stylebox.bg_color = Color(1, 1, 1, 0.2)
+	if info.strength <= -99:
+		stylebox.bg_color = Color(0, 0, 0, 0.2)
+		return
+	elif (info.strength == info.strength_limit and info.pheroType == 0) or (info.strength == info.food_strength_limit and info.pheroType == 1):
+		return
 	else:
 		match info.pheroType:
 			0: my_color = Color(1, 1, 1)

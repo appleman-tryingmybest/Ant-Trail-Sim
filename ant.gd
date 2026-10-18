@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 		for i in range(get_slide_collision_count()):
 			var collision = get_slide_collision(i)
 			var collider = collision.get_collider()
-			if collider is Node2D and (collider.collision_layer == 1 or collider.collision_layer == 7):
+			if collider is Node2D and (collider.collision_layer == 1 or collider.collision_layer == 64):
 				var normal = collision.get_normal()
 				velocity = velocity.bounce(normal)
 				direction = velocity.normalized()
@@ -118,7 +118,7 @@ func _look_for_this_phero_type(): # 0 is white. 1 is green.
 		looking_for_phero_type = 0 # im trying to go back = go for closer distance
 
 func _on_eye_body_entered(body: Node2D) -> void:
-	if target and !takefood and !target_pheromone:
+	if target and !takefood and !target_pheromone or body.strength < -90:
 		currentstate = STATE.think
 		return
 	_look_for_this_phero_type()

@@ -14,7 +14,7 @@ var ini_decay_rate: float
 var strength: float:
 	set(value):
 		if is_blocked:
-			strength = -10
+			strength = -99
 		elif pheroType == 0:
 			strength = min(value, strength_limit)
 		else:
@@ -84,4 +84,4 @@ func _recheck_position_of_targets():
 
 func _on_wall_detect_body_entered(body: Node2D) -> void:
 	is_blocked = true
-	strength = -10
+	strength = -99
