@@ -85,3 +85,5 @@ func _recheck_position_of_targets():
 func _on_wall_detect_body_entered(body: Node2D) -> void:
 	is_blocked = true
 	strength = -99
+	# Blocked cells skip refresh_tick, so draw the blocked color once here.
+	get_parent()._check()
