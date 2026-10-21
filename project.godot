@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Ant trail test"
-run/main_scene="uid://sp1huboi4v5q"
+run/main_scene="uid://dvss8e7fv1esp"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 

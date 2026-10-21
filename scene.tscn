@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dvss8e7fv1esp"]
 
-[ext_resource type="Script" uid="uid://dkp1rjqweoycl" path="res://scene.gd" id="1_m7jmp"]
+[ext_resource type="Script" uid="uid://sjft4nlv7a3j" path="res://Global.gd" id="1_m7jmp"]
 [ext_resource type="Texture2D" uid="uid://gvixjmna8e0s" path="res://assets/white.png" id="1_ulcgi"]
 [ext_resource type="PackedScene" uid="uid://bixmfq2u5pwh7" path="res://home.tscn" id="2_nxogm"]
 [ext_resource type="PackedScene" uid="uid://b2ed8o36bf6gp" path="res://fooddispenser.tscn" id="6_y2354"]
@@ -71,8 +71,8 @@ offset_left = -1064.0
 offset_top = -600.0
 offset_right = 1068.0
 offset_bottom = 600.0
-columns = 31
-width = 31
-height = 18
-cell_width = 65
-cell_height = 63
+columns = 35
+width = 35
+height = 19
+cell_width = 57
+cell_height = 61

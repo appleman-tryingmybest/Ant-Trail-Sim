@@ -11,17 +11,8 @@ radius = 40.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_6rpyw"]
 radius = 40.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5le0k"]
-radius = 8.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_oav7h"]
-radius = 8.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_5tacl"]
-radius = 8.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_y2354"]
-radius = 24.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m7jmp"]
+size = Vector2(8, 40)
 
 [node name="ant" type="CharacterBody2D" unique_id=2110801138]
 z_index = 1
@@ -45,7 +36,7 @@ debug_color = Color(1.2138249, 0.9638566, 0, 0)
 
 [node name="FoodDetectionArea" type="Area2D" parent="." unique_id=1507438079]
 collision_layer = 0
-collision_mask = 4
+collision_mask = 20
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FoodDetectionArea" unique_id=1119815571]
 shape = SubResource("CircleShape2D_ojnr2")
@@ -67,44 +58,16 @@ collision_mask = 8
 shape = SubResource("CircleShape2D_6rpyw")
 debug_color = Color(2.9289904, 2.895715, 2.9289904, 0)
 
-[node name="SeekPheromone" type="Node2D" parent="." unique_id=1563152995]
-
-[node name="eye" type="Area2D" parent="SeekPheromone" unique_id=1159230984]
+[node name="eye" type="Area2D" parent="." unique_id=1159230984]
 collision_layer = 0
 collision_mask = 8
 
-[node name="leftArea" type="CollisionShape2D" parent="SeekPheromone/eye" unique_id=766079909]
-position = Vector2(16, -48)
-scale = Vector2(2, 2)
-shape = SubResource("CircleShape2D_5le0k")
-
-[node name="middleArea" type="CollisionShape2D" parent="SeekPheromone/eye" unique_id=181986146]
+[node name="middleArea" type="CollisionShape2D" parent="eye" unique_id=181986146]
 position = Vector2(48, 0)
 scale = Vector2(2, 2)
-shape = SubResource("CircleShape2D_oav7h")
-
-[node name="rightArea" type="CollisionShape2D" parent="SeekPheromone/eye" unique_id=77098845]
-position = Vector2(16, 48)
-scale = Vector2(2, 2)
-shape = SubResource("CircleShape2D_5tacl")
-
-[node name="SendFoodHome" type="Area2D" parent="." unique_id=1897993899]
-collision_layer = 0
-collision_mask = 16
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SendFoodHome" unique_id=1355778361]
-shape = SubResource("CircleShape2D_y2354")
-
-[node name="Label" type="Label" parent="." unique_id=475344270]
-visible = false
-offset_left = -24.0
-offset_top = -32.0
-offset_right = 16.0
-offset_bottom = -9.0
-text = "State"
+shape = SubResource("RectangleShape2D_m7jmp")
 
 [connection signal="body_entered" from="FoodDetectionArea" to="." method="_on_food_detection_area_body_entered"]
 [connection signal="body_entered" from="TakeFoodArea" to="." method="_on_take_food_area_body_entered"]
 [connection signal="body_entered" from="PheromoneCheck" to="." method="_on_pheromone_check_body_entered"]
-[connection signal="body_entered" from="SeekPheromone/eye" to="." method="_on_eye_body_entered"]
-[connection signal="area_entered" from="SendFoodHome" to="." method="_on_send_food_home_area_entered"]
+[connection signal="body_entered" from="eye" to="." method="_on_eye_body_entered"]

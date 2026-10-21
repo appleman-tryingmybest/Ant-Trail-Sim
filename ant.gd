@@ -19,7 +19,6 @@ var target_pheromone: Node2D
 var looking_for_phero_type = 0
 
 @onready var detectArea = $FoodDetectionArea/CollisionShape2D
-@onready var debug = $Label
 @onready var ant_color = $Ant
 @onready var take_food_area = $TakeFoodArea
 
@@ -53,7 +52,6 @@ func _physics_process(delta: float) -> void:
 				rotation = direction.angle()
 	if takefood and target:
 		target.global_position = global_position
-	debug.text = "Current state is " + str(currentstate)
 	if !takefood:
 		ant_color.modulate = Color(0, 0, 0)
 	else:
@@ -93,13 +91,23 @@ func _go_to_phero():
 		currentstate = STATE.wander
 
 func _on_food_detection_area_body_entered(body: Node2D) -> void:
-	if !body.carried and !target:
-		body.carried = true
-		target = body
-		currentstate = STATE.think
-	else:
-		body = null
-		pass
+	if body.collision_layer == 4:
+		if !body.carried and !target:
+			body.carried = true
+			target = body
+			currentstate = STATE.think
+		else:
+			body = null
+			pass
+	elif body.collision_layer == 16:
+		if target:
+			foundfood = false
+			target.queue_free()
+			takefood = false
+			currentstate = STATE.think
+			rotation_degrees += 180
+		else:
+			pass
 
 func _on_take_food_area_body_entered(body: Node2D) -> void:
 	if body == target:
@@ -137,16 +145,7 @@ func _on_eye_body_entered(body: Node2D) -> void:
 				target_pheromone = body
 	currentstate = STATE.think
 
-func _on_send_food_home_area_entered(area: Area2D) -> void:
-	if target:
-		print("depositing food")
-		foundfood = false
-		target.queue_free()
-		takefood = false
-		currentstate = STATE.think
-		rotation_degrees += 180
-	else:
-		pass
+
 
 
 func _on_pheromone_check_body_entered(body: Node2D) -> void:

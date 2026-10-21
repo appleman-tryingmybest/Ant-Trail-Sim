@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bffxoptj0wkxn" path="res://grid_panel.gd" id="1_qpjan"]
 [ext_resource type="Script" uid="uid://bhe2ux0e4h627" path="res://pheromone_block.gd" id="2_ibfam"]
-[ext_resource type="Texture2D" uid="uid://pmmepp86bq7" path="res://icon.svg" id="3_xrpty"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ojnr2"]
 bg_color = Color(1, 1, 1, 1)
@@ -33,7 +32,6 @@ script = ExtResource("2_ibfam")
 decay = 1.7
 strength_limit = 30.0
 food_strength_limit = 35.0
-refresh_rate = 0.5
 position_refresh = 60.0
 
 [node name="Label" type="Label" parent="pheromone_block" unique_id=1229706061]
@@ -44,6 +42,8 @@ offset_bottom = 30.0
 scale = Vector2(0.57, 0.57)
 text = "Number"
 horizontal_alignment = 1
+visible_characters = 4
+visible_ratio = 0.6666667
 
 [node name="Label2" type="Label" parent="pheromone_block" unique_id=1449055032]
 offset_left = -15.0
@@ -53,6 +53,8 @@ offset_bottom = 50.0
 scale = Vector2(0.57, 0.57)
 text = "Number"
 horizontal_alignment = 1
+visible_characters = 4
+visible_ratio = 0.6666667
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pheromone_block" unique_id=278190463]
 position = Vector2(17, 19)
@@ -60,11 +62,6 @@ shape = SubResource("RectangleShape2D_ojnr2")
 debug_color = Color(0, 0.6, 0.69803923, 0.39607844)
 
 [node name="point" type="Node2D" parent="." unique_id=793713312]
-
-[node name="Icon" type="Sprite2D" parent="point" unique_id=1407188998]
-visible = false
-scale = Vector2(0.075, 0.075)
-texture = ExtResource("3_xrpty")
 
 [node name="wall_detect" type="Area2D" parent="." unique_id=723202862]
 position = Vector2(15, 13)

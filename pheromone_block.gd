@@ -1,22 +1,17 @@
 extends StaticBody2D
 
 @export var decay: float
-@export var decay_rate: float = 1
 @export var strength_limit: float
 @export var food_strength_limit: float
-@export var refresh_rate: float
 @export var enable_debug = false
 @export var position_refresh: float
 
-var ownerant: Node2D
-var ini_decay_rate: float
 var strength: float
 var distance_to_home: float
 var distance_to_food: float
 var pheroType: int = 0
 var home
 var food
-var ini_refresh_rate
 var pointer_pos: Vector2
 var ini_position_refresh
 var is_blocked = false
@@ -26,14 +21,12 @@ var is_blocked = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	ini_decay_rate = decay_rate
-	ini_refresh_rate = refresh_rate
-	if enable_debug:
-		debug.text = str(distance_to_home)
-		debug2.text = str(distance_to_food)
-	elif !enable_debug:
-		debug.hide()
-		debug2.hide()
+	Global.decay.connect(_decay_check)
+	Global.refresh.connect(_refresh_check)
+	Global.checkPos.connect(_recheck_position_of_targets)
+	if !enable_debug:
+		debug.queue_free()
+		debug2.queue_free()
 	await get_tree().process_frame
 	var point = get_parent().pointer_position
 	pointer_pos = point.global_position
@@ -52,28 +45,23 @@ func _process(delta: float) -> void:
 		strength = strength_limit
 	elif strength >= food_strength_limit and pheroType == 1:
 		strength = food_strength_limit
-	decay_rate -= delta
-	if decay_rate < 0:
+
+func _decay_check():
 		if strength <= -5:
 			strength = -5
 		else:
 			strength -= decay
-		decay_rate = ini_decay_rate
 		if pheroType == 1 and strength < 0:
 			pheroType = 0
 
-	refresh_rate -= delta
-	if refresh_rate < 0:
-		var look = get_parent()._check()
-		refresh_rate = ini_refresh_rate
-	
-	position_refresh -= delta
-	if position_refresh < 0:
-		position_refresh = ini_position_refresh
-		_recheck_position_of_targets()
-
+func _refresh_check():
+	var look = get_parent()._check()
 
 func _recheck_position_of_targets():
+	print("checking for shi")
+	if enable_debug:
+		debug.text = str(distance_to_home)
+		debug2.text = str(distance_to_food)
 	home = get_parent().get_parent().get_parent().get_node("home").global_position
 	distance_to_home = global_position.distance_to(home)
 	food = get_parent().get_parent().get_parent().get_node("fooddispenser").global_position

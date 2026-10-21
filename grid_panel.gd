@@ -21,8 +21,6 @@ var my_color = Color(1, 1, 1)
 func _ready():
 	stylebox = get_theme_stylebox("panel").duplicate()
 	stylebox.bg_color = Color(my_color.r, my_color.g, my_color.b, alpha)
-	col.shape = col.shape.duplicate()
-	detect_col.shape = detect_col.shape.duplicate()
 	cell_height = get_parent().cell_height
 	cell_width = get_parent().cell_width
 	_resizeCol()
@@ -40,7 +38,7 @@ func _check():
 	if info.strength <= -99:
 		stylebox.bg_color = Color(0, 0, 0, 0.2)
 		return
-	elif (info.strength == info.strength_limit and info.pheroType == 0) or (info.strength == info.food_strength_limit and info.pheroType == 1):
+	elif (info.strength >= info.strength_limit and info.pheroType == 0) or (info.strength >= info.food_strength_limit and info.pheroType == 1):
 		return
 	else:
 		match info.pheroType:

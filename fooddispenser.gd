@@ -27,10 +27,8 @@ func _process(delta: float) -> void:
 		_spawn()
 	
 	if wander_mode:
-		wander_cooldown -= delta
-		if wander_cooldown < 0:
+		if Global.position_refresh < 0:
 			_wander()
-			wander_cooldown = ini_wander_cooldown
 
 func _wander():
 	global_position = Vector2(randf_range(-1000, 1000), randf_range(-550, 550))
