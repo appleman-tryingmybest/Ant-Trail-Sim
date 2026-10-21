@@ -15,9 +15,13 @@ var food
 var pointer_pos: Vector2
 var ini_position_refresh
 var is_blocked = false
+var average_velocity = Vector2.ZERO
+var ant1 = null
+var ant2 = null
 
 @onready var debug = $Label
 @onready var debug2 = $Label2
+@onready var debug3 = $Label3
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -58,15 +62,33 @@ func _refresh_check():
 	var look = get_parent()._check()
 
 func _recheck_position_of_targets():
-	print("checking for shi")
-	if enable_debug:
-		debug.text = str(distance_to_home)
-		debug2.text = str(distance_to_food)
 	home = get_parent().get_parent().get_parent().get_node("home").global_position
 	distance_to_home = global_position.distance_to(home)
 	food = get_parent().get_parent().get_parent().get_node("fooddispenser").global_position
 	distance_to_food = global_position.distance_to(food)
+	if enable_debug:
+		debug.text = str(distance_to_home)
+		debug2.text = str(distance_to_food)
 
+func _average_velo(body: Node2D):
+
+	if !ant1:
+		ant1 = body
+	elif ant1 and !ant2:
+		ant2 = body
+	print("ant 1 is ", ant1, " ant 2 is ", ant2)
+	if ant1 and ant2:
+		var total_x = (ant1 as CharacterBody2D).velocity.x + (ant2 as CharacterBody2D).velocity.x
+		var total_y = (ant1 as CharacterBody2D).velocity.y + (ant2 as CharacterBody2D).velocity.y
+		average_velocity = Vector2(total_x/2, total_y/2)
+		debug3.text = str(average_velocity)
+		ant1 = null
+		ant2 = null
 
 func _on_wall_detect_body_entered(body: Node2D) -> void:
-	is_blocked = true
+	if body.collision_layer == 64:
+		is_blocked = true
+		return
+	elif body.collision_layer == 2 and !is_blocked:
+		_average_velo(body)
+		
