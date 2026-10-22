@@ -50,8 +50,14 @@ func _physics_process(delta: float) -> void:
 				velocity = velocity.bounce(normal)
 				direction = velocity.normalized()
 				rotation = direction.angle()
-	if takefood and target:
-		target.global_position = global_position
+	if takefood:
+		if is_instance_valid(target):
+			target.global_position = global_position
+		else:
+			# Carried food ran out of lifetime
+			target = null
+			takefood = false
+			currentstate = STATE.think
 	if !takefood:
 		ant_color.modulate = Color(0, 0, 0)
 	else:
@@ -100,9 +106,12 @@ func _on_food_detection_area_body_entered(body: Node2D) -> void:
 			body = null
 			pass
 	elif body.collision_layer == 16:
-		if target:
+		# Only an ant carrying food can deliver it
+		if takefood:
 			foundfood = false
-			target.queue_free()
+			if is_instance_valid(target):
+				target.queue_free()
+			target = null
 			takefood = false
 			currentstate = STATE.think
 			rotation_degrees += 180
