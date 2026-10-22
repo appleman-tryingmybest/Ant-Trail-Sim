@@ -7,6 +7,10 @@ extends CharacterBody2D
 @export var detection_radius: float = 40
 @export var redundant_pheromone_spawn_chance: int
 @export var pheromone_strength_increase : float
+@export var antenna_length: float = 70
+@export var antenna_angle: float = 40
+@export var sense_cooldown: float = 0.15
+@export var turn_speed: float = 5.0
 
 var direction
 var ini_rotation_cooldown
@@ -15,8 +19,10 @@ var takefood = false
 var foundfood = false # might not be useful anymore
 var ini_pheronome_cooldown
 var allow_pheromone_drop = true
-var target_pheromone: Node2D
-var looking_for_phero_type = 0
+var grid
+var sense_timer: float
+# World angle picked by the antennae. null means nothing worth following.
+var steer_angle = null
 
 @onready var detectArea = $FoodDetectionArea/CollisionShape2D
 @onready var ant_color = $Ant
@@ -30,13 +36,20 @@ func _ready() -> void:
 	ini_rotation_cooldown = rotation_cooldown
 	ini_pheronome_cooldown = pheronome_cooldown
 	randomize()
+	grid = get_parent().get_node_or_null("GridContainer")
+	# Spread sensing over frames so ants do not all sense at once
+	sense_timer = randf() * sense_cooldown
 
 func _physics_process(delta: float) -> void:
+	sense_timer -= delta
+	if sense_timer < 0:
+		sense_timer = sense_cooldown
+		_sense()
 	match currentstate:
 		STATE.think: _think()
 		STATE.wander: _wander(delta)
 		STATE.goToFood: _targetfood()
-		STATE.followPhero: _go_to_phero()
+		STATE.followPhero: _follow_trail(delta)
 	
 	direction = Vector2.RIGHT.rotated(rotation)
 	velocity = speed * direction
@@ -64,13 +77,12 @@ func _physics_process(delta: float) -> void:
 		ant_color.modulate = Color(0, 1, 0)
 
 func _think():
-	if target_pheromone != null:
+	if target and !takefood:
+		currentstate = STATE.goToFood
+	elif steer_angle != null:
 		currentstate = STATE.followPhero
 	else:
-		if !target and !takefood:
-			currentstate = STATE.wander
-		elif target and !takefood:
-			currentstate = STATE.goToFood
+		currentstate = STATE.wander
 
 func _wander(delta: float):
 	rotation_cooldown -= delta
@@ -89,12 +101,9 @@ func _targetfood():
 		return
 	look_at(target.global_position)
 
-func _go_to_phero():
-	if global_position.distance_to(target_pheromone.pointer_pos) > 10:
-		look_at(target_pheromone.pointer_pos)
-	else:
-		target_pheromone = null
-		currentstate = STATE.wander
+func _follow_trail(delta: float):
+	var diff = wrapf(steer_angle - rotation, -PI, PI)
+	rotation += clamp(diff, -turn_speed * delta, turn_speed * delta)
 
 func _on_food_detection_area_body_entered(body: Node2D) -> void:
 	if body.collision_layer == 4:
@@ -128,34 +137,42 @@ func _pick_up_food():
 	rotation_degrees += 180
 	foundfood = true
 
-func _look_for_this_phero_type(): # 0 is white. 1 is green.
-	if !takefood:
-		looking_for_phero_type = 1 # im trying to find trail to food = go for further distance
-	elif takefood:
-		looking_for_phero_type = 0 # im trying to go back = go for closer distance
-
-func _on_eye_body_entered(body: Node2D) -> void:
-	if target and !takefood and !target_pheromone or body.strength < -90:
-		currentstate = STATE.think
+# Three antennae (left, front, right) read the grid directly, no physics.
+func _sense():
+	if !grid or (target and !takefood):
 		return
-	_look_for_this_phero_type()
-	if !target_pheromone:
-		if takefood:
-			target_pheromone = body
-			return
-		elif body.pheroType == looking_for_phero_type and !takefood:
-			target_pheromone = body
-	elif target_pheromone and target_pheromone.strength < body.strength:
-		if takefood:
-			if body.distance_to_home < target_pheromone.distance_to_home:# if im going back home i must find closer phero
-				target_pheromone = body
-		elif looking_for_phero_type == 1 and !takefood: # if im finding food i must find furthest green spot
-			if body.distance_to_food < target_pheromone.distance_to_food:
-				target_pheromone = body
+	var here = grid.block_at(global_position)
+	if !here:
+		return
+	var scores = []
+	for side in [-1, 0, 1]:
+		var angle = rotation + deg_to_rad(antenna_angle) * side
+		var block = grid.block_at(global_position + Vector2.RIGHT.rotated(angle) * antenna_length)
+		scores.append([_antenna_score(block, here, angle), angle])
+	var best = scores[0]
+	for s in scores:
+		if s[0] > best[0]:
+			best = s
+	if best[0] <= -1.0:
+		# Walls on all three sides
+		steer_angle = rotation + PI
+	elif scores[1][0] <= -1.0 or best[0] > 0.0 or takefood:
+		steer_angle = best[1]
+	else:
+		steer_angle = null
 	currentstate = STATE.think
 
-
-
+# Wall or outside the grid is -1. Carrying ants follow the home distance, searching ants follow green trails.
+func _antenna_score(block, here, angle: float) -> float:
+	if !block or block.is_blocked:
+		return -1.0
+	if takefood:
+		var progress = (here.distance_to_home - block.distance_to_home) / antenna_length
+		return progress + 0.5 * max(block.strength, 0.0) / block.strength_limit
+	if block.pheroType != 1:
+		return 0.0
+	var progress = (here.distance_to_food - block.distance_to_food) / antenna_length
+	return max(block.strength, 0.0) / block.food_strength_limit + progress
 
 func _on_pheromone_check_body_entered(body: Node2D) -> void:
 	if body.pheroType == 0:
