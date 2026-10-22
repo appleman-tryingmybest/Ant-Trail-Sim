@@ -76,7 +76,6 @@ func _average_velo(body: Node2D):
 		ant1 = body
 	elif ant1 and !ant2:
 		ant2 = body
-	print("ant 1 is ", ant1, " ant 2 is ", ant2)
 	if ant1 and ant2:
 		var total_x = (ant1 as CharacterBody2D).velocity.x + (ant2 as CharacterBody2D).velocity.x
 		var total_y = (ant1 as CharacterBody2D).velocity.y + (ant2 as CharacterBody2D).velocity.y
