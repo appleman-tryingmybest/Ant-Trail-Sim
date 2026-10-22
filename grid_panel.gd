@@ -10,6 +10,9 @@ extends PanelContainer
 
 var alpha: float = 0.1
 var my_color = Color(1, 1, 1)
+# Values from the last redraw. NAN forces the first draw.
+var last_strength: float = NAN
+var last_type: int = -1
 
 
 @onready var info  = $pheromone_block
@@ -35,10 +38,13 @@ func _resizeCol():
 	pointer_position.position = Vector2(cell_width/2, cell_height/2)
 
 func _check():
+	# Skip redraw when nothing changed since the last one.
+	if info.strength == last_strength and info.pheroType == last_type:
+		return
+	last_strength = info.strength
+	last_type = info.pheroType
 	if info.strength <= -99:
 		stylebox.bg_color = Color(0, 0, 0, 0.2)
-		return
-	elif (info.strength >= info.strength_limit and info.pheroType == 0) or (info.strength >= info.food_strength_limit and info.pheroType == 1):
 		return
 	else:
 		match info.pheroType:
