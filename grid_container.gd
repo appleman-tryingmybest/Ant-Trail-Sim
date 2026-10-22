@@ -30,15 +30,18 @@ var grid_cell = preload("res://grid_panel.tscn")
 var border_size = 4
 
 func _ready() -> void:
-	_create_grid()
+	# The setter builds the grid once with the final height.
 	cell_height += 1
 
 func _create_grid():
+	# Exported values are set before the node enters the tree. Building then would be thrown away.
+	if !is_inside_tree():
+		return
 	columns = width
 	for i in width * height:
 		var grid_cell_node = grid_cell.instantiate()
 		grid_cell_node.custom_minimum_size = Vector2(cell_width, cell_height)
-		add_child(grid_cell_node.duplicate())
+		add_child(grid_cell_node)
 
 func _remove_grid():
 	for node in get_children():
