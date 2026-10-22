@@ -11,6 +11,7 @@ extends CharacterBody2D
 @export var antenna_angle: float = 40
 @export var sense_cooldown: float = 0.15
 @export var turn_speed: float = 5.0
+@export var flow_weight: float = 0.5
 
 var direction
 var ini_rotation_cooldown
@@ -166,13 +167,14 @@ func _sense():
 func _antenna_score(block, here, angle: float) -> float:
 	if !block or block.is_blocked:
 		return -1.0
+	var dir = Vector2.RIGHT.rotated(angle)
 	if takefood:
 		var progress = (here.distance_to_home - block.distance_to_home) / antenna_length
-		return progress + 0.5 * max(block.strength, 0.0) / block.strength_limit
+		return progress + 0.5 * max(block.strength, 0.0) / block.strength_limit + flow_weight * block.home_flow.dot(dir)
 	if block.pheroType != 1:
 		return 0.0
 	var progress = (here.distance_to_food - block.distance_to_food) / antenna_length
-	return max(block.strength, 0.0) / block.food_strength_limit + progress
+	return max(block.strength, 0.0) / block.food_strength_limit + progress - flow_weight * block.home_flow.dot(dir)
 
 func _on_pheromone_check_body_entered(body: Node2D) -> void:
 	if body.pheroType == 0:

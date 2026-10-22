@@ -18,6 +18,8 @@ var is_blocked = false
 var average_velocity = Vector2.ZERO
 var ant1 = null
 var ant2 = null
+# Points the way home on this square. Opposite direction points to food.
+var home_flow = Vector2.ZERO
 
 @onready var debug = $Label
 @onready var debug2 = $Label2
@@ -57,6 +59,7 @@ func _decay_check():
 			strength -= decay
 		if pheroType == 1 and strength < 0:
 			pheroType = 0
+		home_flow *= 0.95
 
 func _refresh_check():
 	var look = get_parent()._check()
@@ -90,4 +93,13 @@ func _on_wall_detect_body_entered(body: Node2D) -> void:
 		return
 	elif body.collision_layer == 2 and !is_blocked:
 		_average_velo(body)
+		_record_flow(body)
+
+# Carrying ants head home. Searching ants on a green trail head to food, so their reverse heads home.
+func _record_flow(ant: CharacterBody2D):
+	var heading = ant.velocity.normalized()
+	if ant.takefood:
+		home_flow = home_flow.lerp(heading, 0.3)
+	elif pheroType == 1:
+		home_flow = home_flow.lerp(-heading, 0.3)
 		
